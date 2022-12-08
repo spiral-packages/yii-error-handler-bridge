@@ -6,14 +6,14 @@ use Spiral\Exceptions\ExceptionRendererInterface;
 use Spiral\Exceptions\Verbosity;
 use Yiisoft\ErrorHandler\ThrowableRendererInterface;
 
-final class HtmlRenderer implements ExceptionRendererInterface
+final class PlainTextRenderer implements ExceptionRendererInterface
 {
-    public const FORMATS = ['html', 'application/html', 'text/html'];
+    public const FORMATS = ['text/plain', 'text', 'plain', 'cli', 'console'];
 
     public function __construct(
         private ?ThrowableRendererInterface $renderer = null
     ) {
-        $this->renderer = $renderer ?? new \Yiisoft\ErrorHandler\Renderer\HtmlRenderer();
+        $this->renderer = $renderer ?? new \Yiisoft\ErrorHandler\Renderer\PlainTextRenderer();
     }
 
     public function render(
