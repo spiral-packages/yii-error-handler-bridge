@@ -4,6 +4,7 @@ namespace Spiral\YiiErrorHandler;
 
 use Spiral\Exceptions\ExceptionRendererInterface;
 use Spiral\Exceptions\Verbosity;
+use Yiisoft\ErrorHandler\Renderer\HtmlRenderer as YiiHtmlRenderer;
 use Yiisoft\ErrorHandler\ThrowableRendererInterface;
 
 final class HtmlRenderer implements ExceptionRendererInterface
@@ -11,7 +12,7 @@ final class HtmlRenderer implements ExceptionRendererInterface
     public const FORMATS = ['html', 'application/html', 'text/html'];
 
     public function __construct(
-        private readonly ?ThrowableRendererInterface $renderer = new \Yiisoft\ErrorHandler\Renderer\HtmlRenderer()
+        private readonly ?ThrowableRendererInterface $renderer = new YiiHtmlRenderer()
     ) {
     }
 

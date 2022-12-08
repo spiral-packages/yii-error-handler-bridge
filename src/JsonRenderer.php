@@ -4,6 +4,7 @@ namespace Spiral\YiiErrorHandler;
 
 use Spiral\Exceptions\ExceptionRendererInterface;
 use Spiral\Exceptions\Verbosity;
+use Yiisoft\ErrorHandler\Renderer\JsonRenderer as YiiJsonRenderer;
 use Yiisoft\ErrorHandler\ThrowableRendererInterface;
 
 final class JsonRenderer implements ExceptionRendererInterface
@@ -11,7 +12,7 @@ final class JsonRenderer implements ExceptionRendererInterface
     public const FORMATS = ['application/json', 'json'];
 
     public function __construct(
-        private readonly ?ThrowableRendererInterface $renderer = new \Yiisoft\ErrorHandler\Renderer\JsonRenderer()
+        private readonly ?ThrowableRendererInterface $renderer = new YiiJsonRenderer()
     ) {
     }
 

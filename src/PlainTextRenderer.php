@@ -4,6 +4,7 @@ namespace Spiral\YiiErrorHandler;
 
 use Spiral\Exceptions\ExceptionRendererInterface;
 use Spiral\Exceptions\Verbosity;
+use Yiisoft\ErrorHandler\Renderer\PlainTextRenderer as YiiPlainTextRenderer;
 use Yiisoft\ErrorHandler\ThrowableRendererInterface;
 
 final class PlainTextRenderer implements ExceptionRendererInterface
@@ -11,7 +12,7 @@ final class PlainTextRenderer implements ExceptionRendererInterface
     public const FORMATS = ['text/plain', 'text', 'plain', 'cli', 'console'];
 
     public function __construct(
-        private readonly ?ThrowableRendererInterface $renderer = new \Yiisoft\ErrorHandler\Renderer\PlainTextRenderer()
+        private readonly ?ThrowableRendererInterface $renderer = new YiiPlainTextRenderer()
     ) {
     }
 

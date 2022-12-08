@@ -4,6 +4,7 @@ namespace Spiral\YiiErrorHandler;
 
 use Spiral\Exceptions\ExceptionRendererInterface;
 use Spiral\Exceptions\Verbosity;
+use Yiisoft\ErrorHandler\Renderer\XmlRenderer as YiiXmlRenderer;
 use Yiisoft\ErrorHandler\ThrowableRendererInterface;
 
 final class XmlRenderer implements ExceptionRendererInterface
@@ -11,7 +12,7 @@ final class XmlRenderer implements ExceptionRendererInterface
     public const FORMATS = ['application/xml', 'text/xml'];
 
     public function __construct(
-        private readonly ?ThrowableRendererInterface $renderer = new \Yiisoft\ErrorHandler\Renderer\XmlRenderer()
+        private readonly ?ThrowableRendererInterface $renderer = new YiiXmlRenderer()
     ) {
     }
 
