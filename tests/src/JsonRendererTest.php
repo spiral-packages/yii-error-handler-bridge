@@ -30,9 +30,7 @@ final class JsonRendererTest extends TestCase
 
     public function testCanRender(): void
     {
-        $renderer = new JsonRenderer(
-            m::mock(ThrowableRendererInterface::class)
-        );
+        $renderer = new JsonRenderer();
 
         $this->assertTrue($renderer->canRender('application/json'));
         $this->assertTrue($renderer->canRender('json'));

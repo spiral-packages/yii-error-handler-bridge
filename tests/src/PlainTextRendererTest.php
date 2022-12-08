@@ -31,9 +31,7 @@ final class PlainTextRendererTest extends TestCase
 
     public function testCanRender(): void
     {
-        $renderer = new PlainTextRenderer(
-            m::mock(ThrowableRendererInterface::class)
-        );
+        $renderer = new PlainTextRenderer();
 
         $this->assertTrue($renderer->canRender('text/plain'));
         $this->assertTrue($renderer->canRender('text'));

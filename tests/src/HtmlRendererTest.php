@@ -29,9 +29,7 @@ final class HtmlRendererTest extends TestCase
 
     public function testCanRender(): void
     {
-        $renderer = new HtmlRenderer(
-            m::mock(ThrowableRendererInterface::class)
-        );
+        $renderer = new HtmlRenderer();
 
         $this->assertTrue($renderer->canRender('html'));
         $this->assertTrue($renderer->canRender('application/html'));
