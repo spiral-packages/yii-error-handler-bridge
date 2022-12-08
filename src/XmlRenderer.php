@@ -8,6 +8,8 @@ use Yiisoft\ErrorHandler\ThrowableRendererInterface;
 
 final class XmlRenderer implements ExceptionRendererInterface
 {
+    public const FORMATS = ['application/xml', 'text/xml'];
+
     public function __construct(
         private ?ThrowableRendererInterface $renderer = null
     ) {
@@ -28,6 +30,6 @@ final class XmlRenderer implements ExceptionRendererInterface
 
     public function canRender(string $format): bool
     {
-        return \in_array($format, ['application/xml', 'text/xml'], true);
+        return \in_array($format, self::FORMATS, true);
     }
 }

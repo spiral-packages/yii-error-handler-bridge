@@ -32,14 +32,11 @@ final class XmlRendererTest extends TestCase
 
     public function testCanRender(): void
     {
-        $renderer = new PlainTextRenderer(
+        $renderer = new XmlRenderer(
             m::mock(ThrowableRendererInterface::class)
         );
 
-        $this->assertTrue($renderer->canRender('text/plain'));
-        $this->assertTrue($renderer->canRender('text'));
-        $this->assertTrue($renderer->canRender('plain'));
-        $this->assertTrue($renderer->canRender('cli'));
-        $this->assertTrue($renderer->canRender('console'));
+        $this->assertTrue($renderer->canRender('application/xml'));
+        $this->assertTrue($renderer->canRender('text/xml'));
     }
 }
