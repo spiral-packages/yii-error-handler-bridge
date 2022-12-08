@@ -11,9 +11,8 @@ final class PlainTextRenderer implements ExceptionRendererInterface
     public const FORMATS = ['text/plain', 'text', 'plain', 'cli', 'console'];
 
     public function __construct(
-        private ?ThrowableRendererInterface $renderer = null
+        private readonly ?ThrowableRendererInterface $renderer = new \Yiisoft\ErrorHandler\Renderer\PlainTextRenderer()
     ) {
-        $this->renderer = $renderer ?? new \Yiisoft\ErrorHandler\Renderer\PlainTextRenderer();
     }
 
     public function render(

@@ -38,5 +38,6 @@ final class PlainTextRendererTest extends TestCase
         $this->assertTrue($renderer->canRender('plain'));
         $this->assertTrue($renderer->canRender('cli'));
         $this->assertTrue($renderer->canRender('console'));
+        $this->assertFalse($renderer->canRender('text/html'));
     }
 }

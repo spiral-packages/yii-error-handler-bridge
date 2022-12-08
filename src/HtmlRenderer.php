@@ -11,9 +11,8 @@ final class HtmlRenderer implements ExceptionRendererInterface
     public const FORMATS = ['html', 'application/html', 'text/html'];
 
     public function __construct(
-        private ?ThrowableRendererInterface $renderer = null
+        private readonly ?ThrowableRendererInterface $renderer = new \Yiisoft\ErrorHandler\Renderer\HtmlRenderer()
     ) {
-        $this->renderer = $renderer ?? new \Yiisoft\ErrorHandler\Renderer\HtmlRenderer();
     }
 
     public function render(

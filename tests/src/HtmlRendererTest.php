@@ -34,5 +34,6 @@ final class HtmlRendererTest extends TestCase
         $this->assertTrue($renderer->canRender('html'));
         $this->assertTrue($renderer->canRender('application/html'));
         $this->assertTrue($renderer->canRender('text/html'));
+        $this->assertFalse($renderer->canRender('application/json'));
     }
 }

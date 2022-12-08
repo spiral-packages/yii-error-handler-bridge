@@ -11,9 +11,8 @@ final class JsonRenderer implements ExceptionRendererInterface
     public const FORMATS = ['application/json', 'json'];
 
     public function __construct(
-        private ?ThrowableRendererInterface $renderer = null
+        private readonly ?ThrowableRendererInterface $renderer = new \Yiisoft\ErrorHandler\Renderer\JsonRenderer()
     ) {
-        $this->renderer = $renderer ?? new \Yiisoft\ErrorHandler\Renderer\JsonRenderer();
     }
 
     public function render(

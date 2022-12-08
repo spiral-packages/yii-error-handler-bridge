@@ -11,9 +11,8 @@ final class XmlRenderer implements ExceptionRendererInterface
     public const FORMATS = ['application/xml', 'text/xml'];
 
     public function __construct(
-        private ?ThrowableRendererInterface $renderer = null
+        private readonly ?ThrowableRendererInterface $renderer = new \Yiisoft\ErrorHandler\Renderer\XmlRenderer()
     ) {
-        $this->renderer = $renderer ?? new \Yiisoft\ErrorHandler\Renderer\XmlRenderer();
     }
 
     public function render(

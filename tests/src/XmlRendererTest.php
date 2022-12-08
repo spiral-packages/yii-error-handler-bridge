@@ -36,5 +36,6 @@ final class XmlRendererTest extends TestCase
 
         $this->assertTrue($renderer->canRender('application/xml'));
         $this->assertTrue($renderer->canRender('text/xml'));
+        $this->assertFalse($renderer->canRender('text/html'));
     }
 }

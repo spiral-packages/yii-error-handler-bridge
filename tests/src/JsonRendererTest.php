@@ -34,5 +34,6 @@ final class JsonRendererTest extends TestCase
 
         $this->assertTrue($renderer->canRender('application/json'));
         $this->assertTrue($renderer->canRender('json'));
+        $this->assertFalse($renderer->canRender('application/html'));
     }
 }
