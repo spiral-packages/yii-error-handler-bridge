@@ -20,7 +20,7 @@ Make sure that your server is configured with following PHP version and extensio
 You can install the package via composer:
 
 ```bash
-composer require spiral/yii-error-handler-bridge
+composer require spiral-packages/yii-error-handler-bridge
 ```
 
 After package install you need to register bootloader from the package.
@@ -32,7 +32,8 @@ protected const LOAD = [
 ];
 ```
 
-> Note: if you are using [`spiral-packages/discoverer`](https://github.com/spiral-packages/discoverer),
+> **Note**
+> If you are using [`spiral-packages/discoverer`](https://github.com/spiral-packages/discoverer),
 > you don't need to register bootloader by yourself.
 
 ## Testing

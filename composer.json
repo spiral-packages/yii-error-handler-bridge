@@ -1,56 +1,60 @@
 {
-  "name": "spiral/yii-error-handler-bridge",
-  "description": "This is my package yii-error-handler-bridge",
-  "keywords": [
-    "spiral",
-    "yii-error-handler-bridge"
-  ],
-  "homepage": "https://github.com/spiral/yii-error-handler-bridge",
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "kastahov",
-      "email": "kastahov1021@gmail.com",
-      "role": "Developer"
-    }
-  ],
-  "require": {
-    "php": "^8.1",
-    "spiral/boot": "^3.0",
-    "spiral/exceptions": "^3.0",
-    "yiisoft/error-handler": "^2.1"
-  },
-  "require-dev": {
-    "mockery/mockery": "^1.5",
-    "phpunit/phpunit": "^9.5",
-    "spiral/testing": "^2.0",
-    "vimeo/psalm": "^4.9"
-  },
-  "autoload": {
-    "psr-4": {
-      "Spiral\\YiiErrorHandler\\": "src"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Spiral\\YiiErrorHandler\\Tests\\App\\": "tests/app",
-      "Spiral\\YiiErrorHandler\\Tests\\": "tests/src"
-    }
-  },
-  "scripts": {
-    "test": "vendor/bin/phpunit",
-    "psalm": "vendor/bin/psalm --config=psalm.xml ./src"
-  },
-  "config": {
-    "sort-packages": true
-  },
-  "extra": {
-    "spiral": {
-      "bootloaders": [
-        "Spiral\\YiiErrorHandler\\Bootloader\\YiiErrorHandlerBootloader"
-      ]
-    }
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true
+    "name": "spiral-packages/yii-error-handler-bridge",
+    "description": "Yii Error Handler integration package for Spiral Framework",
+    "keywords": [
+        "spiral",
+        "spiral-framework",
+        "error-handling"
+    ],
+    "homepage": "https://github.com/spiral-packages/yii-error-handler-bridge",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "kastahov",
+            "email": "kastahov1021@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "spiral/boot": "^3.0",
+        "spiral/exceptions": "^3.0",
+        "yiisoft/error-handler": "^2.1"
+    },
+    "require-dev": {
+        "spiral/http": "^3.0",
+        "mockery/mockery": "^1.5",
+        "phpunit/phpunit": "^9.5",
+        "spiral/testing": "^2.0",
+        "vimeo/psalm": "^4.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "Spiral\\YiiErrorHandler\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Spiral\\YiiErrorHandler\\Tests\\": "tests/src"
+        },
+        "files": [
+            "tests/polyfill.php"
+        ]
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "psalm": "vendor/bin/psalm --config=psalm.xml ./src"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "spiral": {
+            "bootloaders": [
+                "Spiral\\YiiErrorHandler\\Bootloader\\YiiErrorHandlerBootloader"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
