@@ -24,7 +24,7 @@
     "require-dev": {
         "spiral/http": "^3.0",
         "mockery/mockery": "^1.5",
-        "phpunit/phpunit": "^9.5",
+        "phpunit/phpunit": "^9.5.28",
         "spiral/testing": "^2.0",
         "vimeo/psalm": "^4.9"
     },
