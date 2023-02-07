@@ -15,45 +15,9 @@ Make sure that your server is configured with following PHP version and extensio
 - PHP 8.1+
 - Spiral framework 3.0+
 
-## Installation
+## Documentation, Installation, and Usage Instructions
 
-You can install the package via composer:
-
-```bash
-composer require spiral-packages/yii-error-handler-bridge
-```
-
-After package install you need to register bootloader from the package.
-
-```php
-protected const LOAD = [
-    // ...
-    \Spiral\YiiErrorHandler\Bootloader\YiiErrorHandlerBootloader::class,
-];
-```
-
-> **Note**
-> If you are using [`spiral-packages/discoverer`](https://github.com/spiral-packages/discoverer),
-> you don't need to register bootloader by yourself.
-
-## Testing
-
-```bash
-composer test
-```
-
-## Contributing
-
-Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
-
-## Security Vulnerabilities
-
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
-
-## Credits
-
-- [kastahov](https://github.com/spiral)
-- [All Contributors](../../contributors)
+See the [documentation](https://spiral.dev/docs/basics-errors#yii-error-renderer) for detailed installation and usage instructions.
 
 ## License
 
