@@ -9,7 +9,7 @@ use Yiisoft\ErrorHandler\ThrowableRendererInterface;
 
 final class PlainTextRenderer implements ExceptionRendererInterface
 {
-    public const FORMATS = ['text/plain', 'text', 'plain', 'cli', 'console'];
+    public const FORMATS = ['text/plain', 'text', 'plain'];
 
     public function __construct(
         private readonly ?ThrowableRendererInterface $renderer = new YiiPlainTextRenderer()
