@@ -566,7 +566,9 @@ $solution = $isFriendlyException ? $throwable->getSolution() : null;
             color: #000;
         }
 
-        .footer svg {}
+        .footer svg {
+            margin-bottom: 20px;
+        }
         /* end footer */
 
         /* highlight.js */
