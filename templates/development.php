@@ -77,7 +77,10 @@ $solution = $isFriendlyException ? $throwable->getSolution() : null;
         /* header */
         header {
             padding: 65px 100px 270px 100px;
-            background: #ededed;
+            background: #dae8f8;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAzMTQyIDU5MSI+PGcgY2xpcC1wYXRoPSJ1cmwoI2EpIiBvcGFjaXR5PSIuNyI+PHBhdGggZmlsbD0iIzZGQjdGMSIgZD0iTTM2ODEtMzQxOC00MDIgMTM4NmwtMTAzNC0zNTI5IDUxMTctMTI3NVoiLz48cGF0aCBmaWxsPSIjNDU5QUUxIiBkPSJtMzY4MS0zNDE4LTggMzAwNS0xNDAxIDYxOS0yNjc0IDExODAgNDA4My00ODA0WiIvPjxwYXRoIGZpbGw9IiMzRjg3RDIiIGQ9Im0yMjcyIDIwNi02MTcgMjI0MC0yMDU3LTEwNjBMMjI3MiAyMDZaIi8+PHBhdGggZmlsbD0iIzQ1OUFFMSIgZD0iTTMzNDggODg0IDE2NTUgMjQ0Nmw2MTctMjI0MCAxMDc2IDY3OFoiLz48L2c+PGRlZnM+PGNsaXBQYXRoIGlkPSJhIj48cGF0aCBmaWxsPSIjZmZmIiBkPSJNMCAwaDMxNDJ2NTkxSDB6Ii8+PC9jbGlwUGF0aD48L2RlZnM+PC9zdmc+");
         }
 
         header .tools {
@@ -90,13 +93,17 @@ $solution = $isFriendlyException ? $throwable->getSolution() : null;
             text-decoration: none;
         }
 
+        header .tools svg {
+            fill: #afdefa;
+        }
+
         header .tools a:hover svg path {
-            fill: #000;
+            fill: #FFFFFF;
         }
 
         header .exception-card {
             position: relative;
-            background: #fafafa;
+            background-color: #fafafa;
             border: 2px solid #3F87D2;
             box-sizing: border-box;
             padding: 40px 30px;
@@ -644,17 +651,19 @@ $solution = $isFriendlyException ? $throwable->getSolution() : null;
 
         /* start dark-theme */
         .dark-theme {
-            background: rgba(46,46,46, 0.9);
+            background: rgba(46, 46, 46, 0.9);
             color: #fff;
         }
 
         .dark-theme header {
             background: #2e2e2e;
+            background-size: cover;
+            background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAzMTQyIDU5MSI+PGcgY2xpcC1wYXRoPSJ1cmwoI2EpIiBvcGFjaXR5PSIuNSI+PHBhdGggZmlsbD0iIzBEMjEzMSIgZD0iTTMxNDItMjMyMSAxNzggMTE2NWwtNzUwLTI1NjEgMzcxNC05MjVaIi8+PHBhdGggZmlsbD0iIzFBM0M1OCIgZD0ibTMxNDItMjMyMS02IDIxODEtMTAxNyA0NDktMTk0MSA4NTYgMjk2NC0zNDg2WiIvPjxwYXRoIGZpbGw9IiMwRDIwMzQiIGQ9Im0yMTE5IDMwOS00NDcgMTYyNi0xNDk0LTc3MCAxOTQxLTg1NloiLz48cGF0aCBmaWxsPSIjMUEzQzU4IiBkPSJNMjkwMCA4MDEgMTY3MiAxOTM1bDQ0Ny0xNjI2IDc4MSA0OTJaIi8+PC9nPjxkZWZzPjxjbGlwUGF0aCBpZD0iYSI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTAgMGgzMTQydjU5MUgweiIvPjwvY2xpcFBhdGg+PC9kZWZzPjwvc3ZnPg==");
         }
 
         .dark-theme .exception-card {
             background: #222;
-            border: 3px solid #591e15;
+            border: 3px solid #234e7c;
         }
 
         .dark-theme .exception-class,
@@ -683,7 +692,7 @@ $solution = $isFriendlyException ? $throwable->getSolution() : null;
         }
 
         .dark-theme .call-stack ul li.call-stack-vendor-group {
-            background: rgba(46,46,46, 0.9);
+            background: rgba(46, 46, 46, 0.9);
             border: 2px solid #666;
         }
 
@@ -692,7 +701,7 @@ $solution = $isFriendlyException ? $throwable->getSolution() : null;
         }
 
         .dark-theme .call-stack > ul > li.call-stack-vendor-group > ul {
-            background: rgba(46,46,46, 0.9);
+            background: rgba(46, 46, 46, 0.9);
         }
 
         .dark-theme .call-stack > ul > li.call-stack-vendor-group > ul > li {
@@ -818,24 +827,30 @@ $solution = $isFriendlyException ? $throwable->getSolution() : null;
     <div class="tools">
         <a href="#" title="Dark Mode" id="dark-mode">
             <svg width="28" height="28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M27.0597 19.06c-2.5312.9821-5.2934 1.2069-7.9501.6472-2.6568-.5598-5.0934-1.8799-7.0133-3.7998-1.9198-1.9198-3.24001-4.3565-3.79975-7.01324-.55974-2.65674-.33489-5.41892.64718-7.95016-3.04045 1.1849-5.57175 3.39424-7.15685 6.24657C.201778 10.0429-.337628 13.3592.26179 16.5668c.599419 3.2077 2.30004 6.1053 4.80824 8.1928C7.57822 26.847 10.7366 27.9931 13.9997 28c2.8246.0007 5.5833-.8527 7.9141-2.4481 2.3307-1.5955 4.1245-3.8585 5.1459-6.4919z" fill="#787878"/>
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                      d="M27.0597 19.06c-2.5312.9821-5.2934 1.2069-7.9501.6472-2.6568-.5598-5.0934-1.8799-7.0133-3.7998-1.9198-1.9198-3.24001-4.3565-3.79975-7.01324-.55974-2.65674-.33489-5.41892.64718-7.95016-3.04045 1.1849-5.57175 3.39424-7.15685 6.24657C.201778 10.0429-.337628 13.3592.26179 16.5668c.599419 3.2077 2.30004 6.1053 4.80824 8.1928C7.57822 26.847 10.7366 27.9931 13.9997 28c2.8246.0007 5.5833-.8527 7.9141-2.4481 2.3307-1.5955 4.1245-3.8585 5.1459-6.4919z"/>
             </svg>
         </a>
 
         <a href="#" title="Light Mode" id="light-mode">
             <svg width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M15 2h2v5h-2V2zM21.6875 8.9l3.506-3.50699 1.414 1.415-3.506 3.50599-1.414-1.414zM25 15h5v2h-5v-2zM21.6875 23.1l1.414-1.414 3.506 3.506-1.414 1.415-3.506-3.507zM15 25h2v5h-2v-5zM5.39453 25.192l3.506-3.506 1.41397 1.415-3.50597 3.506-1.414-1.415zM2 15h5v2H2v-2zM5.39453 6.80801l1.414-1.415L10.3145 8.9l-1.41397 1.414-3.506-3.50599zM16 10c-1.1867 0-2.3467.3519-3.3334 1.0112-.9867.6593-1.7557 1.5963-2.2099 2.6927-.4541 1.0964-.57292 2.3028-.3414 3.4666.2315 1.1639.8029 2.233 1.6421 3.0721.8391.8392 1.9082 1.4106 3.0721 1.6421 1.1638.2315 2.3702.1127 3.4666-.3414 1.0964-.4541 2.0334-1.2232 2.6927-2.2099C21.6481 18.3467 22 17.1867 22 16c0-1.5913-.6321-3.1174-1.7574-4.2426C19.1174 10.6321 17.5913 10 16 10z" fill="#989898"/>
+                <path
+                    d="M15 2h2v5h-2V2zM21.6875 8.9l3.506-3.50699 1.414 1.415-3.506 3.50599-1.414-1.414zM25 15h5v2h-5v-2zM21.6875 23.1l1.414-1.414 3.506 3.506-1.414 1.415-3.506-3.507zM15 25h2v5h-2v-5zM5.39453 25.192l3.506-3.506 1.41397 1.415-3.50597 3.506-1.414-1.415zM2 15h5v2H2v-2zM5.39453 6.80801l1.414-1.415L10.3145 8.9l-1.41397 1.414-3.506-3.50599zM16 10c-1.1867 0-2.3467.3519-3.3334 1.0112-.9867.6593-1.7557 1.5963-2.2099 2.6927-.4541 1.0964-.57292 2.3028-.3414 3.4666.2315 1.1639.8029 2.233 1.6421 3.0721.8391.8392 1.9082 1.4106 3.0721 1.6421 1.1638.2315 2.3702.1127 3.4666-.3414 1.0964-.4541 2.0334-1.2232 2.6927-2.2099C21.6481 18.3467 22 17.1867 22 16c0-1.5913-.6321-3.1174-1.7574-4.2426C19.1174 10.6321 17.5913 10 16 10z"/>
             </svg>
         </a>
 
-        <a href="https://stackoverflow.com/search?<?= http_build_query(['q' => $throwable->getMessage()]) ?>" title="Search error on Stackoverflow" target="_blank">
+        <a href="https://stackoverflow.com/search?<?= http_build_query(['q' => $throwable->getMessage()]) ?>"
+           title="Search error on Stackoverflow" target="_blank">
             <svg width="28" height="32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M23.312 29.151v-8.536h2.849V32H.458008V20.615H3.29701v8.536H23.312zM6.14501 26.307H20.469v-2.848H6.14501v2.848zm.35-6.468L20.47 22.755l.599-2.76-13.96899-2.912-.605 2.756zm1.812-6.74L21.246 19.136l1.203-2.6-12.93699-6.041-1.204 2.584-.001.02zm3.61999-6.38L22.88 15.86l1.813-2.163L13.74 4.562l-1.803 2.151-.01.006zM19 0l-2.328 1.724 8.541 11.473 2.328-1.724L19 0z" fill="#787878"/>
+                <path
+                    d="M23.312 29.151v-8.536h2.849V32H.458008V20.615H3.29701v8.536H23.312zM6.14501 26.307H20.469v-2.848H6.14501v2.848zm.35-6.468L20.47 22.755l.599-2.76-13.96899-2.912-.605 2.756zm1.812-6.74L21.246 19.136l1.203-2.6-12.93699-6.041-1.204 2.584-.001.02zm3.61999-6.38L22.88 15.86l1.813-2.163L13.74 4.562l-1.803 2.151-.01.006zM19 0l-2.328 1.724 8.541 11.473 2.328-1.724L19 0z"/>
             </svg>
         </a>
-        <a href="https://www.google.com/search?<?= http_build_query(['q' => $throwable->getMessage()]) ?>" title="Search error on Google" target="_blank">
+        <a href="https://www.google.com/search?<?= http_build_query(['q' => $throwable->getMessage()]) ?>"
+           title="Search error on Google" target="_blank">
             <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M23.5313 9.825H12.2407v4.6406h6.45c-.2781 1.5-1.1219 2.7688-2.3937 3.6188-1.075.7187-2.4469 1.1437-4.0594 1.1437-3.12188 0-5.7625-2.1094-6.70625-4.9437-.2375-.7188-.375-1.4875-.375-2.2781 0-.7907.1375-1.5594.375-2.27818.94687-2.83125 3.5875-4.94062 6.70935-4.94062 1.7594 0 3.3375.60625 4.5813 1.79375l3.4375-3.44063C18.1813 1.20312 15.472.015625 12.2407.015625c-4.68435 0-8.73748 2.687495-10.70935 6.606245C.718848 8.24062.256348 10.0719.256348 12.0094s.4625 3.7656 1.275002 5.3843C3.50322 21.3125 7.55635 24 12.2407 24c3.2375 0 5.95-1.075 7.9313-2.9062 2.2656-2.0875 3.575-5.1625 3.575-8.8157 0-.85-.075-1.6656-.2157-2.4531z" fill="#787878"/>
+                <path
+                    d="M23.5313 9.825H12.2407v4.6406h6.45c-.2781 1.5-1.1219 2.7688-2.3937 3.6188-1.075.7187-2.4469 1.1437-4.0594 1.1437-3.12188 0-5.7625-2.1094-6.70625-4.9437-.2375-.7188-.375-1.4875-.375-2.2781 0-.7907.1375-1.5594.375-2.27818.94687-2.83125 3.5875-4.94062 6.70935-4.94062 1.7594 0 3.3375.60625 4.5813 1.79375l3.4375-3.44063C18.1813 1.20312 15.472.015625 12.2407.015625c-4.68435 0-8.73748 2.687495-10.70935 6.606245C.718848 8.24062.256348 10.0719.256348 12.0094s.4625 3.7656 1.275002 5.3843C3.50322 21.3125 7.55635 24 12.2407 24c3.2375 0 5.95-1.075 7.9313-2.9062 2.2656-2.0875 3.575-5.1625 3.575-8.8157 0-.85-.075-1.6656-.2157-2.4531z"/>
             </svg>
         </a>
     </div>
