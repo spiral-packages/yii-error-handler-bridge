@@ -10,10 +10,16 @@ use Yiisoft\ErrorHandler\ThrowableRendererInterface;
 final class HtmlRenderer implements ExceptionRendererInterface
 {
     public const FORMATS = ['html', 'application/html', 'text/html'];
+    private readonly ThrowableRendererInterface $renderer;
 
     public function __construct(
-        private readonly ?ThrowableRendererInterface $renderer = new YiiHtmlRenderer()
+        ?ThrowableRendererInterface $renderer = null,
     ) {
+        $this->renderer = $renderer ?? new YiiHtmlRenderer(
+            settings: [
+                'verboseTemplate' => dirname(__DIR__) . '/templates/development.php',
+            ]
+        );
     }
 
     public function render(
