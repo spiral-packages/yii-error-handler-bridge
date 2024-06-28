@@ -27,7 +27,7 @@ final class HtmlRenderer implements ExceptionRendererInterface
         ?Verbosity $verbosity = Verbosity::BASIC,
         string $format = null,
     ): string {
-        if ($verbosity >= Verbosity::VERBOSE) {
+        if ($verbosity?->value >= Verbosity::VERBOSE->value) {
             return (string)$this->renderer->renderVerbose($exception);
         }
 
