@@ -1,5 +1,7 @@
 <?php
 
+use Yiisoft\ErrorHandler\CompositeException;
+use Yiisoft\ErrorHandler\Exception\ErrorException;
 use Yiisoft\FriendlyException\FriendlyExceptionInterface;
 
 /**
@@ -10,8 +12,15 @@ use Yiisoft\FriendlyException\FriendlyExceptionInterface;
 
 $theme = $_COOKIE['yii-exception-theme'] ?? '';
 
+$originalException = $throwable;
+if ($throwable instanceof CompositeException) {
+    $throwable = $throwable->getFirstException();
+}
 $isFriendlyException = $throwable instanceof FriendlyExceptionInterface;
 $solution = $isFriendlyException ? $throwable->getSolution() : null;
+$exceptionClass = get_class($throwable);
+$exceptionMessage = $throwable->getMessage();
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -23,802 +32,7 @@ $solution = $isFriendlyException ? $throwable->getSolution() : null;
         <?= $this->htmlEncode($this->getThrowableName($throwable)) ?>
     </title>
     <style>
-        /* reset */
-        html,
-        body,
-        div,
-        span,
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6,
-        p,
-        pre,
-        a,
-        code,
-        em,
-        img,
-        strong,
-        b,
-        i,
-        ul,
-        li {
-            margin: 0;
-            padding: 0;
-            border: 0;
-            font: inherit;
-            vertical-align: baseline;
-        }
-
-        body {
-            font-family: 'Roboto', sans-serif;
-            min-width: 800px;
-            color: #505050;
-            line-height: 1;
-        }
-
-        ul {
-            list-style: none;
-        }
-        /* end reset */
-
-        /* base */
-        a {
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-        /* end base */
-
-        /* header */
-        header {
-            padding: 65px 100px 270px 100px;
-            background: #dae8f8;
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAzMTQyIDU5MSI+PGcgY2xpcC1wYXRoPSJ1cmwoI2EpIiBvcGFjaXR5PSIuNyI+PHBhdGggZmlsbD0iIzZGQjdGMSIgZD0iTTM2ODEtMzQxOC00MDIgMTM4NmwtMTAzNC0zNTI5IDUxMTctMTI3NVoiLz48cGF0aCBmaWxsPSIjNDU5QUUxIiBkPSJtMzY4MS0zNDE4LTggMzAwNS0xNDAxIDYxOS0yNjc0IDExODAgNDA4My00ODA0WiIvPjxwYXRoIGZpbGw9IiMzRjg3RDIiIGQ9Im0yMjcyIDIwNi02MTcgMjI0MC0yMDU3LTEwNjBMMjI3MiAyMDZaIi8+PHBhdGggZmlsbD0iIzQ1OUFFMSIgZD0iTTMzNDggODg0IDE2NTUgMjQ0Nmw2MTctMjI0MCAxMDc2IDY3OFoiLz48L2c+PGRlZnM+PGNsaXBQYXRoIGlkPSJhIj48cGF0aCBmaWxsPSIjZmZmIiBkPSJNMCAwaDMxNDJ2NTkxSDB6Ii8+PC9jbGlwUGF0aD48L2RlZnM+PC9zdmc+");
-        }
-
-        header .tools {
-            margin-bottom: 50px;
-            text-align: right;
-        }
-
-        header .tools a {
-            margin-left: 45px;
-            text-decoration: none;
-        }
-
-        header .tools svg {
-            fill: #afdefa;
-        }
-
-        header .tools a:hover svg path {
-            fill: #FFFFFF;
-        }
-
-        header .exception-card {
-            position: relative;
-            background-color: #fafafa;
-            border: 2px solid #3F87D2;
-            box-sizing: border-box;
-            padding: 40px 30px;
-            word-break: break-word;
-        }
-
-        header .exception-class {
-            padding-right: 114px;
-            margin-bottom: 30px;
-            font-weight: 500;
-            font-size: 26px;
-            color: #3F87D2;
-        }
-
-        header .exception-class a {
-            color: #3F87D2;
-        }
-
-        header .exception-message {
-            font-size: 18px;
-            color: #4b4b4b;
-        }
-
-        header .exception-class span,
-        header .exception-class span a {
-            color: #3F87D2;
-        }
-
-        header .solution {
-            margin-top: 24px;
-            font-size: 16px;
-            line-height: 22px;
-        }
-
-        header .solution h1 {
-            margin-top: 24px;
-            font-size: 26px;
-            line-height: 32px;
-            font-weight: bold;
-        }
-
-        header .solution h2 {
-            margin-top: 24px;
-            font-size: 22px;
-            line-height: 28px;
-            font-weight: bold;
-        }
-
-        header .solution h3 {
-            margin-top: 24px;
-            font-size: 20px;
-            line-height: 26px;
-            font-weight: bold;
-        }
-
-        header .solution h4 {
-            margin-top: 24px;
-            font-size: 18px;
-            line-height: 24px;
-            font-weight: bold;
-        }
-
-        header .solution h5 {
-            margin-top: 24px;
-            font-size: 16px;
-            line-height: 22px;
-            font-weight: bold;
-        }
-
-        header .solution h6 {
-            margin-top: 24px;
-            font-size: 14px;
-            line-height: 20px;
-            font-weight: bold;
-        }
-
-        header .solution p {
-            margin-top: 16px;
-        }
-
-        header .solution a {
-            color: #00617b;
-            text-decoration: underline;
-        }
-        header .solution a:hover {
-            color: #1191b3;
-        }
-        .dark-theme header .solution a {
-            color: #03a9f4;
-        }
-        .dark-theme header .solution a:hover {
-            color: #39b9f3;
-        }
-
-        header .solution h1:first-child,
-        header .solution h2:first-child,
-        header .solution h3:first-child,
-        header .solution h4:first-child,
-        header .solution h5:first-child,
-        header .solution h6:first-child,
-        header .solution p:first-child {
-            margin-top: 0;
-        }
-
-        header .solution blockquote {
-            margin: 18px 0 18px 4px;
-            padding: 3px 0 2px 16px;
-            border-left: 4px solid #e4e4e4;
-            color: #707070;
-        }
-        .dark-theme header .solution blockquote {
-            color: #999;
-            border-color: #484c50;
-        }
-
-        header .solution ul,
-        header .solution ol {
-            padding: 0;
-            margin: 16px 0 0 32px;
-        }
-        header .solution li ul,
-        header .solution li ol {
-            margin: 0 0 0 24px;
-        }
-
-        header .solution li {
-            margin: 8px 0 0 0;
-        }
-
-        header .solution ul {
-            list-style: outside;
-        }
-
-        header .solution pre,
-        header .solution code {
-            font-family: monospace;
-        }
-
-        header .solution code {
-            padding: 2px 6px;
-            font-size: 90%;
-            background-color: #f3f3f3;
-            border-radius: 6px;
-        }
-
-        header .solution pre {
-            margin: 24px 0;
-            width: 100%;
-            box-sizing: border-box;
-            overflow: auto;
-            padding: 14px;
-            border-radius: 8px;
-            background: #f3f3f3;
-        }
-        header .solution pre code {
-            font-size: 100%;
-            padding: 0;
-            width: max-content;
-        }
-
-        .dark-theme header .solution code,
-        .dark-theme header .solution pre {
-            background: #2d333b;
-        }
-
-        header .solution table {
-            margin: 16px 0 0 0;
-            border-collapse: collapse;
-        }
-        header .solution td,
-        header .solution th {
-            padding: 6px 12px;
-            border: 1px solid #e4e4e4;
-        }
-        .dark-theme header .solution td,
-        .dark-theme header .solution th {
-            border-color: #484c50;
-        }
-
-        header .solution HR {
-            margin: 24px 0;
-            border: 1px solid #ddd;
-            border-width: 1px 0 0 0;
-        }
-        .dark-theme header .solution HR {
-            border-color: #484c50;
-        }
-
-        header .previous {
-            display: flex;
-            margin-top: 20px;
-        }
-
-        header .previous .arrow {
-            display: inline-block;
-            transform: scale(-1, 1);
-            font-size: 26px;
-            color: #e51717;
-            margin-top: -5px;
-            margin-right: 10px;
-        }
-
-        header .previous h2 {
-            font-size: 20px;
-            color: #e57373;
-            margin-bottom: 10px;
-        }
-
-        header .previous h2 span {
-            color: #e51717;
-        }
-
-        header .previous h3 {
-            font-size: 14px;
-            margin: 10px 0;
-        }
-
-        #clipboard {
-            position: absolute;
-            top: -500px;
-            right: 300px;
-            width: 750px;
-            height: 150px;
-        }
-
-        #copy-stacktrace {
-            position: absolute;
-            right: 40px;
-            top: 44px;
-        }
-
-        #copy-stacktrace:hover svg path {
-            fill: #000;
-        }
-
-        #copied {
-            display: none;
-            position: absolute;
-            right: 76px;
-            top: 51px;
-        }
-
-        #light-mode {
-            display: none;
-        }
-        /* end header */
-
-        main {
-            margin-left: 100px;
-            margin-right: 100px;
-        }
-
-        @media screen and (max-width: 1200px) {
-            header {
-                padding-left: 50px;
-                padding-right: 50px;
-            }
-
-            main {
-                margin-left: 50px;
-                margin-right: 50px;
-            }
-        }
-
-        .flex-1 {
-            flex: 1;
-        }
-
-        /* call stack */
-        .call-stack ul li,
-        .request {
-            border: 2px solid #d0d0d0;
-            box-shadow: 0 15px 20px rgba(0, 0, 0, 0.05);
-            background: #fff;
-            margin-bottom: 30px;
-            border-radius: 3px;
-        }
-
-        .call-stack > ul > li:first-child {
-            margin-top: -200px;
-        }
-
-        .call-stack > ul > li:last-child {
-            margin-bottom: 50px;
-        }
-
-        .call-stack > ul > li.call-stack-vendor-group {
-            background: #ededed;
-        }
-
-        .call-stack > ul > li.call-stack-vendor-group .call-stack-vendor-state {
-            display: inline-block;
-            height: 22px;
-            width: 22px;
-            font-size: 20px;
-            color: #fff;
-            background: #999;
-            border-radius: 3px;
-            text-align: center;
-            margin-right: 15px;
-        }
-
-        .call-stack > ul > li.call-stack-vendor-group > ul {
-            display: none;
-            background: #ededed;
-        }
-
-        .call-stack > ul > li.call-stack-vendor-group > ul > li {
-            border-left: 0;
-            border-right: 0;
-            box-shadow: none;
-        }
-
-        .call-stack > ul > li.call-stack-vendor-group > ul > li:last-child {
-            border-bottom: 2px solid transparent;
-            margin-bottom: 0;
-        }
-
-        .call-stack ul li .element-wrap {
-            display: flex;
-            cursor: pointer;
-            padding: 20px 30px;
-            font-weight: 500;
-            font-size: 18px;
-            line-height: 21px;
-            color: #4b4b4b;
-        }
-
-        .call-stack ul li .element-wrap .file-name {
-            color: #4b4b4b;
-        }
-
-        .call-stack ul li .element-wrap:hover .file-name,
-        .call-stack ul li .element-code-wrap .code-wrap .lines-item:hover {
-            color: #086eb6;
-        }
-
-        .call-stack ul li .element-wrap .function-info {
-            display: inline-block;
-        }
-
-        .call-stack ul li.application .element-wrap {
-            border-bottom: 1px solid #d0d0d0;
-        }
-
-        .call-stack ul li a {
-            color: #505050;
-        }
-
-        .call-stack ul li a:hover {
-            color: #000;
-        }
-
-        .call-stack ul li a .external-link {
-            vertical-align: middle;
-        }
-
-        .call-stack ul li a .external-link:hover path {
-            fill: #000;
-        }
-
-        .call-stack ul li a .external-link path {
-            fill: #505050;
-        }
-
-        .call-stack ul li .element-code-wrap {
-            overflow-x: auto;
-        }
-
-        .call-stack ul li .element-code-wrap .code-wrap {
-            display: none;
-            position: relative;
-        }
-
-        .call-stack ul li.application .element-code-wrap .code-wrap {
-            display: block;
-        }
-
-        .call-stack ul li .error-line,
-        .call-stack ul li .hover-line {
-            background-color: #ffebeb;
-            position: absolute;
-            width: 100%;
-            z-index: 100;
-            margin-top: 0;
-        }
-
-        .call-stack ul li .hover-line {
-            background: none;
-        }
-
-        .call-stack ul li .hover-line.hover,
-        .call-stack ul li .hover-line:hover {
-            background: #edf9ff !important;
-        }
-
-        .call-stack ul li .code {
-            min-width: 700px;
-            /* 800px - 50px * 2 */
-            margin: 15px auto;
-            padding: 0 50px;
-            position: relative;
-        }
-
-        .call-stack ul li .code .lines-item {
-            position: absolute;
-            z-index: 200;
-            display: block;
-            width: 25px;
-            text-align: right;
-            color: #aaa;
-            line-height: 20px;
-            font-size: 12px;
-            margin-top: 1px;
-            font-family: JetBrains Mono, Consolas, monospace;
-        }
-
-        .call-stack ul li .code pre {
-            position: relative;
-            z-index: 200;
-            left: 50px;
-            line-height: 20px;
-            font-size: 12px;
-            font-family: JetBrains Mono, Consolas, monospace;
-            display: inline;
-        }
-
-        @-moz-document url-prefix() {
-            .call-stack ul li .code pre {
-                line-height: 20px;
-            }
-        }
-        /* end call stack */
-
-        /* request */
-        .request {
-            padding: 20px 30px;
-            font-size: 14px;
-            line-height: 18px;
-            overflow-x: auto;
-            font-family: JetBrains Mono, Consolas, monospace;
-        }
-        /* end request */
-
-        /* footer */
-        .footer {
-            display: flex;
-        }
-
-        .footer div {
-            align-self: center;
-        }
-
-        .footer .timestamp,
-        .footer .server {
-            margin-bottom: 20px;
-        }
-
-        .footer p,
-        .footer p a {
-            font-size: 16px;
-            line-height: 28px;
-            color: #9c9c9c;
-        }
-
-        .footer p a:hover {
-            color: #000;
-        }
-
-        .footer svg {
-            margin-bottom: 20px;
-        }
-        /* end footer */
-
-        /* highlight.js */
-        .hljs {
-            display: block;
-            color: #2f3337;
-        }
-
-        .hljs-comment {
-            color: #656e77;
-        }
-
-        .hljs-keyword,
-        .hljs-selector-tag,
-        .hljs-meta-keyword,
-        .hljs-doctag,
-        .hljs-section,
-        .hljs-selector-class,
-        .hljs-meta,
-        .hljs-selector-pseudo,
-        .hljs-attr {
-            color: #015692;
-        }
-
-        .hljs-attribute {
-            color: #803378;
-        }
-
-        .hljs-name,
-        .hljs-type,
-        .hljs-number,
-        .hljs-selector-id,
-        .hljs-quote,
-        .hljs-template-tag,
-        .hljs-built_in,
-        .hljs-title,
-        .hljs-literal {
-            color: #b75501;
-        }
-
-        .hljs-string,
-        .hljs-regexp,
-        .hljs-symbol,
-        .hljs-variable,
-        .hljs-template-variable,
-        .hljs-link,
-        .hljs-selector-attr,
-        .hljs-meta-string {
-            color: #54790d;
-        }
-
-        .hljs-bullet,
-        .hljs-code {
-            color: #535a60;
-        }
-
-        .hljs-deletion {
-            color: #c02d2e;
-        }
-
-        .hljs-addition {
-            color: #2f6f44;
-        }
-
-        .hljs-emphasis {
-            font-style: italic;
-        }
-
-        .hljs-strong {
-            font-weight: bold;
-        }
-        /* end highlight.js */
-
-        /* start dark-theme */
-        .dark-theme {
-            background: rgba(46, 46, 46, 0.9);
-            color: #fff;
-        }
-
-        .dark-theme header {
-            background: #2e2e2e;
-            background-size: cover;
-            background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAzMTQyIDU5MSI+PGcgY2xpcC1wYXRoPSJ1cmwoI2EpIiBvcGFjaXR5PSIuNSI+PHBhdGggZmlsbD0iIzBEMjEzMSIgZD0iTTMxNDItMjMyMSAxNzggMTE2NWwtNzUwLTI1NjEgMzcxNC05MjVaIi8+PHBhdGggZmlsbD0iIzFBM0M1OCIgZD0ibTMxNDItMjMyMS02IDIxODEtMTAxNyA0NDktMTk0MSA4NTYgMjk2NC0zNDg2WiIvPjxwYXRoIGZpbGw9IiMwRDIwMzQiIGQ9Im0yMTE5IDMwOS00NDcgMTYyNi0xNDk0LTc3MCAxOTQxLTg1NloiLz48cGF0aCBmaWxsPSIjMUEzQzU4IiBkPSJNMjkwMCA4MDEgMTY3MiAxOTM1bDQ0Ny0xNjI2IDc4MSA0OTJaIi8+PC9nPjxkZWZzPjxjbGlwUGF0aCBpZD0iYSI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTAgMGgzMTQydjU5MUgweiIvPjwvY2xpcFBhdGg+PC9kZWZzPjwvc3ZnPg==");
-        }
-
-        .dark-theme .exception-card {
-            background: #222;
-            border: 3px solid #234e7c;
-        }
-
-        .dark-theme .exception-class,
-        .dark-theme .call-stack ul li a {
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        .dark-theme .exception-class span,
-        .dark-theme .exception-class span a,
-        .dark-theme .previous .arrow,
-        .dark-theme .previous h2 span {
-            color: #fff;
-        }
-
-        .dark-theme .exception-message,
-        .dark-theme .solution,
-        .dark-theme .previous {
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        .dark-theme .call-stack ul li,
-        .dark-theme .request {
-            background: #1e1e1e;
-            border: 2px solid transparent;
-            box-shadow: 0 13px 20px rgba(0, 0, 0, 0.25);
-        }
-
-        .dark-theme .call-stack ul li.call-stack-vendor-group {
-            background: rgba(46, 46, 46, 0.9);
-            border: 2px solid #666;
-        }
-
-        .dark-theme .call-stack > ul > li.call-stack-vendor-group .call-stack-vendor-state {
-            background: #666;
-        }
-
-        .dark-theme .call-stack > ul > li.call-stack-vendor-group > ul {
-            background: rgba(46, 46, 46, 0.9);
-        }
-
-        .dark-theme .call-stack > ul > li.call-stack-vendor-group > ul > li {
-            border-top: 2px solid #666;
-            border-bottom: 2px solid #666;
-            border-left: 0;
-            border-right: 0;
-            box-shadow: none;
-        }
-
-        .dark-theme .call-stack > ul > li.call-stack-vendor-group > ul > li:last-child {
-            border-bottom: 2px solid transparent;
-        }
-
-        .dark-theme .call-stack ul li .error-line {
-            background-color: #422c2c;
-        }
-
-        .dark-theme .call-stack ul li .hover-line.hover,
-        .dark-theme .call-stack ul li .hover-line:hover {
-            background: #292929 !important;
-        }
-
-        .dark-theme li.application .element-wrap {
-            border-bottom: 1px solid #141414 !important;
-        }
-
-        .dark-theme .element-wrap,
-        .dark-theme .element-wrap .file-name {
-            color: #fff !important;
-        }
-
-        .dark-theme .element-wrap:hover .file-name,
-        .dark-theme .call-stack ul li .element-code-wrap .code-wrap .lines-item:hover {
-            color: #9cdcfe !important;
-        }
-
-        .dark-theme header .tools a:hover svg path,
-        .dark-theme #copy-stacktrace:hover svg path,
-        .dark-theme .call-stack ul li a .external-link:hover path {
-            fill: #fff;
-        }
-
-        .dark-theme #copy-stacktrace svg path,
-        .dark-theme header .tools a svg path,
-        .dark-theme .call-stack ul li a .external-link path {
-            fill: #989898;
-        }
-
-        .dark-theme #dark-mode {
-            display: none;
-        }
-
-        .dark-theme #light-mode {
-            display: inline;
-        }
-
-        .dark-theme .hljs {
-            color: #fff;
-        }
-
-        .dark-theme .hljs-comment {
-            color: #999;
-        }
-
-        .dark-theme .hljs-keyword,
-        .dark-theme .hljs-selector-tag,
-        .dark-theme .hljs-meta-keyword,
-        .dark-theme .hljs-doctag,
-        .dark-theme .hljs-section,
-        .dark-theme .hljs-selector-class,
-        .dark-theme .hljs-meta,
-        .dark-theme .hljs-selector-pseudo,
-        .dark-theme .hljs-attr {
-            color: #88aece;
-        }
-
-        .dark-theme .hljs-attribute {
-            color: #c59bc1;
-        }
-
-        .dark-theme .hljs-name,
-        .dark-theme .hljs-type,
-        .dark-theme .hljs-number,
-        .dark-theme .hljs-selector-id,
-        .dark-theme .hljs-quote,
-        .dark-theme .hljs-template-tag,
-        .dark-theme .hljs-built_in,
-        .dark-theme .hljs-title,
-        .dark-theme .hljs-literal {
-            color: #f08d49;
-        }
-
-        .dark-theme .hljs-string,
-        .dark-theme .hljs-regexp,
-        .dark-theme .hljs-symbol,
-        .dark-theme .hljs-variable,
-        .dark-theme .hljs-template-variable,
-        .dark-theme .hljs-link,
-        .dark-theme .hljs-selector-attr,
-        .dark-theme .hljs-meta-string {
-            color: #b5bd68;
-        }
-
-        .dark-theme .hljs-bullet,
-        .dark-theme .hljs-code {
-            color: #cccccc;
-        }
-
-        .dark-theme .hljs-deletion {
-            color: #de7176;
-        }
-
-        .dark-theme .hljs-addition {
-            color: #76c490;
-        }
-        /* end dark-theme */
+        <?= file_get_contents(__DIR__ . '/development.css') ?>
     </style>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700">
 </head>
@@ -839,15 +53,13 @@ $solution = $isFriendlyException ? $throwable->getSolution() : null;
             </svg>
         </a>
 
-        <a href="https://stackoverflow.com/search?<?= http_build_query(['q' => $throwable->getMessage()]) ?>"
-           title="Search error on Stackoverflow" target="_blank">
+        <a href="https://stackoverflow.com/search?<?= http_build_query(['q' => $exceptionMessage]) ?>" title="Search error on Stackoverflow" target="_blank">
             <svg width="28" height="32" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                     d="M23.312 29.151v-8.536h2.849V32H.458008V20.615H3.29701v8.536H23.312zM6.14501 26.307H20.469v-2.848H6.14501v2.848zm.35-6.468L20.47 22.755l.599-2.76-13.96899-2.912-.605 2.756zm1.812-6.74L21.246 19.136l1.203-2.6-12.93699-6.041-1.204 2.584-.001.02zm3.61999-6.38L22.88 15.86l1.813-2.163L13.74 4.562l-1.803 2.151-.01.006zM19 0l-2.328 1.724 8.541 11.473 2.328-1.724L19 0z"/>
             </svg>
         </a>
-        <a href="https://www.google.com/search?<?= http_build_query(['q' => $throwable->getMessage()]) ?>"
-           title="Search error on Google" target="_blank">
+        <a href="https://www.google.com/search?<?= http_build_query(['q' => $exceptionMessage]) ?>" title="Search error on Google" target="_blank">
             <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                     d="M23.5313 9.825H12.2407v4.6406h6.45c-.2781 1.5-1.1219 2.7688-2.3937 3.6188-1.075.7187-2.4469 1.1437-4.0594 1.1437-3.12188 0-5.7625-2.1094-6.70625-4.9437-.2375-.7188-.375-1.4875-.375-2.2781 0-.7907.1375-1.5594.375-2.27818.94687-2.83125 3.5875-4.94062 6.70935-4.94062 1.7594 0 3.3375.60625 4.5813 1.79375l3.4375-3.44063C18.1813 1.20312 15.472.015625 12.2407.015625c-4.68435 0-8.73748 2.687495-10.70935 6.606245C.718848 8.24062.256348 10.0719.256348 12.0094s.4625 3.7656 1.275002 5.3843C3.50322 21.3125 7.55635 24 12.2407 24c3.2375 0 5.95-1.075 7.9313-2.9062 2.2656-2.0875 3.575-5.1625 3.575-8.8157 0-.85-.075-1.6656-.2157-2.4531z"/>
@@ -857,29 +69,34 @@ $solution = $isFriendlyException ? $throwable->getSolution() : null;
 
     <div class="exception-card">
         <div class="exception-class">
-            <?php if ($isFriendlyException): ?>
+            <?php
+            if ($isFriendlyException): ?>
                 <span><?= $this->htmlEncode($throwable->getName())?></span>
                 &mdash;
-                <?= get_class($throwable) ?>
+                <?= $exceptionClass ?>
             <?php else: ?>
-                <span><?= get_class($throwable) ?></span>
+                <span><?= $exceptionClass ?></span>
             <?php endif ?>
         </div>
 
         <div class="exception-message">
-            <?= nl2br($this->htmlEncode($throwable->getMessage())) ?>
+            <?= nl2br($this->htmlEncode($exceptionMessage)) ?>
         </div>
 
         <?php if ($solution !== null): ?>
             <div class="solution"><?= $this->parseMarkdown($solution) ?></div>
         <?php endif ?>
 
-        <?= $this->renderPreviousExceptions($throwable) ?>
+        <?= $this->renderPreviousExceptions($originalException) ?>
 
         <textarea id="clipboard"><?= $this->htmlEncode($throwable) ?></textarea>
         <span id="copied">Copied!</span>
 
-        <a href="#" id="copy-stacktrace" title="Copy the stacktrace for use in a bug report or pastebin">
+        <a href="#"
+           class="copy-clipboard"
+           data-clipboard="<?= $this->htmlEncode($throwable) ?>"
+           title="Copy the stacktrace for use in a bug report or pastebin"
+        >
             <svg width="26" height="30" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M17.9998.333344H3.33317C1.8665.333344.666504 1.53334.666504 3.00001V20.3333c0 .7334.599996 1.3334 1.333336 1.3334.73333 0 1.33333-.6 1.33333-1.3334V4.33334c0-.73333.6-1.33333 1.33333-1.33333h13.3333c.7334 0 1.3334-.6 1.3334-1.33333 0-.733337-.6-1.333336-1.3334-1.333336zm5.3334 5.333336H8.6665c-1.46666 0-2.66666 1.2-2.66666 2.66666V27c0 1.4667 1.2 2.6667 2.66666 2.6667h14.6667c1.4666 0 2.6666-1.2 2.6666-2.6667V8.33334c0-1.46666-1.2-2.66666-2.6666-2.66666zM21.9998 27H9.99984c-.73333 0-1.33334-.6-1.33334-1.3333V9.66668c0-.73334.60001-1.33334 1.33334-1.33334H21.9998c.7334 0 1.3334.6 1.3334 1.33334V25.6667c0 .7333-.6 1.3333-1.3334 1.3333z" fill="#787878"/>
             </svg>
@@ -889,16 +106,39 @@ $solution = $isFriendlyException ? $throwable->getSolution() : null;
 
 <main>
     <div class="call-stack">
-        <?= $this->renderCallStack($throwable) ?>
+        <?= $this->renderCallStack(
+            $throwable,
+            $originalException === $throwable && $originalException instanceof ErrorException
+                ? $originalException->getBacktrace()
+                : $throwable->getTrace()
+        ) ?>
     </div>
     <?php if ($request && ($requestInfo = $this->renderRequest($request)) !== ''): ?>
         <div class="request">
-            <?= $requestInfo ?>
+            <h2>Request info</h2>
+            <div class="body">
+                <pre class="codeBlock language-text"><?= $this->htmlEncode(rtrim($requestInfo, "\n")) ?></pre>
+            </div>
         </div>
     <?php endif ?>
     <?php if ($request && ($curlInfo = $this->renderCurl($request)) !== 'curl'): ?>
         <div class="request">
-            <?= $curlInfo ?>
+            <textarea id="clipboard"><?= $curlInfo ?></textarea>
+            <span id="copied" style="top: 10px">Copied!</span>
+            <h2>cURL</h2>
+            <a href="#"
+               class="copy-clipboard"
+               data-clipboard="<?= $curlInfo ?>"
+               title="Copy the cURL"
+               style="right: 10px; top: 5px"
+            >
+                <svg width="26" height="30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.9998.333344H3.33317C1.8665.333344.666504 1.53334.666504 3.00001V20.3333c0 .7334.599996 1.3334 1.333336 1.3334.73333 0 1.33333-.6 1.33333-1.3334V4.33334c0-.73333.6-1.33333 1.33333-1.33333h13.3333c.7334 0 1.3334-.6 1.3334-1.33333 0-.733337-.6-1.333336-1.3334-1.333336zm5.3334 5.333336H8.6665c-1.46666 0-2.66666 1.2-2.66666 2.66666V27c0 1.4667 1.2 2.6667 2.66666 2.6667h14.6667c1.4666 0 2.6666-1.2 2.6666-2.6667V8.33334c0-1.46666-1.2-2.66666-2.6666-2.66666zM21.9998 27H9.99984c-.73333 0-1.33334-.6-1.33334-1.3333V9.66668c0-.73334.60001-1.33334 1.33334-1.33334H21.9998c.7334 0 1.3334.6 1.3334 1.33334V25.6667c0 .7333-.6 1.3333-1.3334 1.3333z" fill="#787878"/>
+                </svg>
+            </a>
+            <div class="body">
+                <div class="codeBlock language-sh"><?= $this->htmlEncode($curlInfo) ?></div>
+            </div>
         </div>
     <?php endif ?>
     <div class="footer">
@@ -934,15 +174,15 @@ $solution = $isFriendlyException ? $throwable->getSolution() : null;
 </script>
 <script>
     window.onload = function() {
-        var codeBlocks = document.querySelectorAll('.solution pre code,.codeBlock'),
-            callStackItems = document.getElementsByClassName('call-stack-item');
+        const codeBlocks = document.querySelectorAll('.solution pre code,.codeBlock');
+        const callStackItems = document.getElementsByClassName('call-stack-item');
 
         // If there are grouped vendor package files
-        var vendorCollapse = document.getElementsByClassName('call-stack-vendor-collapse');
-        for (var i = 0, imax = vendorCollapse.length; i < imax; ++i) {
+        const vendorCollapse = document.getElementsByClassName('call-stack-vendor-collapse');
+        for (let i = 0, imax = vendorCollapse.length; i < imax; ++i) {
             vendorCollapse[i].addEventListener('click', function (event) {
-                var vendorCollapseState = this.getElementsByClassName('call-stack-vendor-state')[0];
-                var vendorCollapseItems = this.parentElement.getElementsByClassName('call-stack-vendor-items')[0];
+                const vendorCollapseState = this.getElementsByClassName('call-stack-vendor-state')[0];
+                const vendorCollapseItems = this.parentElement.getElementsByClassName('call-stack-vendor-items')[0];
 
                 if (vendorCollapseItems.style.display === 'block') {
                     vendorCollapseItems.style.display = 'none';
@@ -961,21 +201,21 @@ $solution = $isFriendlyException ? $throwable->getSolution() : null;
         hljs.listLanguages().forEach(function(language) {
             hljs.getLanguage(language).disableAutodetect = true;
         });
-        for (var i = 0, imax = codeBlocks.length; i < imax; ++i) {
+        for (let i = 0, imax = codeBlocks.length; i < imax; ++i) {
             hljs.highlightElement(codeBlocks[i]);
         }
 
-        var refreshCallStackItemCode = function(callStackItem) {
+        const refreshCallStackItemCode = function(callStackItem) {
             if (!callStackItem.getElementsByTagName('pre')[0]) {
                 return;
             }
-            var top = callStackItem.getElementsByClassName('code-wrap')[0].offsetTop - window.pageYOffset + 3,
+            const top = callStackItem.getElementsByClassName('code-wrap')[0].offsetTop - window.pageYOffset + 3,
                 lines = callStackItem.getElementsByTagName('pre')[0].getClientRects(),
                 lineNumbers = callStackItem.getElementsByClassName('lines-item'),
                 errorLine = callStackItem.getElementsByClassName('error-line')[0],
                 hoverLines = callStackItem.getElementsByClassName('hover-line');
 
-            for (var i = 0, imax = lines.length; i < imax; ++i) {
+            for (let i = 0, imax = lines.length; i < imax; ++i) {
                 if (!lineNumbers[i]) {
                     continue;
                 }
@@ -985,7 +225,7 @@ $solution = $isFriendlyException ? $throwable->getSolution() : null;
                 hoverLines[i].style.height = parseInt(lines[i].bottom - lines[i].top + 6) + 'px';
                 hoverLines[i].style.width = hoverLines[i].parentElement.parentElement.scrollWidth + 'px'
 
-                if (parseInt(callStackItem.getAttribute('data-line')) == i) {
+                if (parseInt(callStackItem.getAttribute('data-line')) === i) {
                     errorLine.style.top = parseInt(lines[i].top - top) + 'px';
                     errorLine.style.height = parseInt(lines[i].bottom - lines[i].top + 6) + 'px';
                     errorLine.style.width = errorLine.parentElement.parentElement.scrollWidth + 'px';
@@ -994,11 +234,44 @@ $solution = $isFriendlyException ? $throwable->getSolution() : null;
         };
 
         for (var i = 0, imax = callStackItems.length; i < imax; ++i) {
-            refreshCallStackItemCode(callStackItems[i]);
+            let stackItem = callStackItems[i];
+            refreshCallStackItemCode(stackItem);
 
             // toggle code block visibility
-            callStackItems[i].getElementsByClassName('element-wrap')[0].addEventListener('click', function (event) {
+            stackItem.querySelector('.toggleFunctionArguments')?.addEventListener('click', function (e) {
+                e.stopPropagation();
+                stackItem.getElementsByClassName('functionArguments')[0].classList.toggle('hidden');
+            });
+
+            // toggle code block visibility
+            const arguments = stackItem.querySelector('.arguments');
+            arguments?.addEventListener('select', function (e) {
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+            })
+
+            arguments?.addEventListener('click', function (e) {
+                e.stopPropagation();
+                // stop click event on selecting text
+                if (document.getSelection()?.type === 'Range') {
+                    return;
+                }
+
+                const fullArguments = stackItem.querySelector('.full-arguments');
+                const shortArguments = stackItem.querySelector('.short-arguments');
+                if (fullArguments) {
+                    fullArguments.classList.toggle('hidden');
+                    shortArguments.classList.toggle('hidden');
+                }
+            });
+
+            // toggle code block visibility
+            stackItem.getElementsByClassName('element-wrap')[0].addEventListener('click', function (event) {
                 if (event.target.nodeName.toLowerCase() === 'a') {
+                    return;
+                }
+                // stop click event on selecting text
+                if (document.getSelection()?.type === 'Range') {
                     return;
                 }
 
@@ -1021,45 +294,58 @@ $solution = $isFriendlyException ? $throwable->getSolution() : null;
         }
 
         // handle copy stacktrace action on clipboard button
-        document.getElementById('copy-stacktrace').onclick = function(e) {
+        const copyIntoClipboard = function(e) {
             e.preventDefault();
-            var textarea = document.getElementById('clipboard');
+            const parentContainer = e.currentTarget.parentElement;
+            const textarea = parentContainer.querySelector('#clipboard');
             textarea.focus();
             textarea.select();
 
-            var succeeded;
+            let succeeded;
             try {
                 succeeded = document.execCommand('copy');
             } catch (err) {
                 succeeded = false;
             }
             if (succeeded) {
-                var hint = document.getElementById('copied');
+                const hint = parentContainer.querySelector('#copied');
+                if (!hint) {
+                    return
+                }
                 hint.style.display = 'block';
-                setTimeout(function () {
-                    hint.style.display = 'none';
-                }, 2000);
+                setTimeout(() => hint.style.display = 'none', 2000);
             } else {
                 // fallback: show textarea if browser does not support copying directly
                 textarea.style.top = 0;
             }
         }
+        const elements = document.querySelectorAll('.copy-clipboard')
+        for (let element of elements) {
+            element.onclick = copyIntoClipboard;
+        }
+
 
         // handle theme change
         document.getElementById('dark-mode').onclick = function(e) {
             e.preventDefault();
-
-            document.body.classList.add('dark-theme');
-
-            setCookie('yii-exception-theme', 'dark-theme');
+            enableDarkTheme();
         }
 
         document.getElementById('light-mode').onclick = function(e) {
             e.preventDefault();
+            enableLightTheme();
+        }
 
+        function enableDarkTheme() {
+            document.body.classList.remove('light-theme');
+            document.body.classList.add('dark-theme');
+            setCookie('yii-exception-theme', 'dark-theme');
+        }
+
+        function enableLightTheme() {
             document.body.classList.remove('dark-theme');
-
-            eraseCookie('yii-exception-theme');
+            document.body.classList.add('light-theme');
+            setCookie('yii-exception-theme', 'light-theme');
         }
     };
 
