@@ -27,10 +27,11 @@
         "yiisoft/error-handler": "4.1.0"
     },
     "require-dev": {
-        "spiral/http": "^3.0",
+        "buggregator/trap": "^1.13",
         "mockery/mockery": "^1.5",
         "phpunit/phpunit": "^9.5.28",
         "spiral/code-style": "^2.2.2",
+        "spiral/http": "^3.0",
         "spiral/testing": "^2.9",
         "vimeo/psalm": "^6.10"
     },

@@ -6,23 +6,10 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 
 use Spiral\Exceptions\Verbosity;
 use Spiral\YiiErrorHandler\JsonRenderer;
-
-// Create a test exception
-$exception = new RuntimeException('This is a test exception for JSON renderer', 500);
-
-// Create nested exception for better demonstration
-try {
-    try {
-        throw new InvalidArgumentException('Invalid argument provided', 400);
-    } catch (InvalidArgumentException $e) {
-        throw new RuntimeException('Failed to process request: ' . $e->getMessage(), 500, $e);
-    }
-} catch (RuntimeException $e) {
-    $exception = $e;
-}
+use Spiral\YiiErrorHandler\Tests\Acceptance\ExceptionFactory;
 
 // Set content type to JSON
-header('Content-Type: application/json');
+\header('Content-Type: application/json');
 
 // Get verbosity level from query parameter
 $verbosityParam = $_GET['verbosity'] ?? 'basic';
@@ -32,6 +19,9 @@ $verbosity = match ($verbosityParam) {
     'debug' => Verbosity::DEBUG,
     default => Verbosity::BASIC,
 };
+
+// Create a rich test exception
+$exception = ExceptionFactory::createException('Complex exception for JSON renderer demonstration');
 
 // Create JSON renderer
 $renderer = new JsonRenderer();

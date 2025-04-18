@@ -6,8 +6,8 @@ declare(strict_types=1);
 $uri = $_SERVER['REQUEST_URI'];
 
 // Strip query string
-if (($pos = strpos($uri, '?')) !== false) {
-    $uri = substr($uri, 0, $pos);
+if (($pos = \strpos($uri, '?')) !== false) {
+    $uri = \substr($uri, 0, $pos);
 }
 
 // Default to index.php for the root path
@@ -31,5 +31,5 @@ if (isset($routes[$uri])) {
 }
 
 // Return 404 if the route is not found
-http_response_code(404);
+\http_response_code(404);
 echo "404 Not Found: {$uri}";

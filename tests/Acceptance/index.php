@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+set_time_limit(0);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,10 +27,11 @@ declare(strict_types=1);
         .renderer-section {
             margin-bottom: 30px;
         }
-        .verbosity-buttons {
+        .button-group {
             display: flex;
             gap: 10px;
             margin-top: 10px;
+            flex-wrap: wrap;
         }
         .btn {
             display: inline-block;
@@ -68,7 +71,7 @@ declare(strict_types=1);
     <div class="renderer-section">
         <h2>HTML Renderer</h2>
         <div class="description">Renders an exception in HTML format</div>
-        <div class="verbosity-buttons">
+        <div class="button-group">
             <a href="/html-exception?verbosity=basic" class="btn btn-basic">Basic</a>
             <a href="/html-exception?verbosity=verbose" class="btn btn-verbose">Verbose</a>
             <a href="/html-exception?verbosity=debug" class="btn btn-debug">Debug</a>
@@ -78,7 +81,7 @@ declare(strict_types=1);
     <div class="renderer-section">
         <h2>JSON Renderer</h2>
         <div class="description">Renders an exception in JSON format</div>
-        <div class="verbosity-buttons">
+        <div class="button-group">
             <a href="/json-exception?verbosity=basic" class="btn btn-basic">Basic</a>
             <a href="/json-exception?verbosity=verbose" class="btn btn-verbose">Verbose</a>
             <a href="/json-exception?verbosity=debug" class="btn btn-debug">Debug</a>
@@ -88,7 +91,7 @@ declare(strict_types=1);
     <div class="renderer-section">
         <h2>Plain Text Renderer</h2>
         <div class="description">Renders an exception in plain text format</div>
-        <div class="verbosity-buttons">
+        <div class="button-group">
             <a href="/plain-exception?verbosity=basic" class="btn btn-basic">Basic</a>
             <a href="/plain-exception?verbosity=verbose" class="btn btn-verbose">Verbose</a>
             <a href="/plain-exception?verbosity=debug" class="btn btn-debug">Debug</a>
@@ -98,7 +101,7 @@ declare(strict_types=1);
     <div class="renderer-section">
         <h2>XML Renderer</h2>
         <div class="description">Renders an exception in XML format</div>
-        <div class="verbosity-buttons">
+        <div class="button-group">
             <a href="/xml-exception?verbosity=basic" class="btn btn-basic">Basic</a>
             <a href="/xml-exception?verbosity=verbose" class="btn btn-verbose">Verbose</a>
             <a href="/xml-exception?verbosity=debug" class="btn btn-debug">Debug</a>
@@ -107,5 +110,7 @@ declare(strict_types=1);
 
     <p>To run this demo, use the PHP built-in web server:</p>
     <pre>php -S localhost:8000 server.php</pre>
+    <p>Or use the Composer script:</p>
+    <pre>composer sandbox</pre>
 </body>
 </html>

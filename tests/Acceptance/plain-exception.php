@@ -6,23 +6,10 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 
 use Spiral\Exceptions\Verbosity;
 use Spiral\YiiErrorHandler\PlainTextRenderer;
-
-// Create a test exception
-$exception = new RuntimeException('This is a test exception for Plain Text renderer', 500);
-
-// Create nested exception for better demonstration
-try {
-    try {
-        throw new InvalidArgumentException('Invalid argument provided', 400);
-    } catch (InvalidArgumentException $e) {
-        throw new RuntimeException('Failed to process request: ' . $e->getMessage(), 500, $e);
-    }
-} catch (RuntimeException $e) {
-    $exception = $e;
-}
+use Spiral\YiiErrorHandler\Tests\Acceptance\ExceptionFactory;
 
 // Set content type to plain text
-header('Content-Type: text/plain');
+\header('Content-Type: text/plain');
 
 // Get verbosity level from query parameter
 $verbosityParam = $_GET['verbosity'] ?? 'basic';
@@ -32,6 +19,9 @@ $verbosity = match ($verbosityParam) {
     'debug' => Verbosity::DEBUG,
     default => Verbosity::BASIC,
 };
+
+// Create a rich test exception
+$exception = ExceptionFactory::createException('Complex exception for Plain Text renderer demonstration');
 
 // Create Plain Text renderer
 $renderer = new PlainTextRenderer();
