@@ -1,18 +1,17 @@
 <?php
 
-namespace Spiral\YiiErrorHandler\Tests;
+namespace Spiral\YiiErrorHandler\Tests\Unit;
 
 use Spiral\YiiErrorHandler\HtmlRenderer;
 use Mockery as m;
-use Spiral\YiiErrorHandler\JsonRenderer;
 use Yiisoft\ErrorHandler\ErrorData;
 use Yiisoft\ErrorHandler\ThrowableRendererInterface;
 
-final class JsonRendererTest extends TestCase
+final class HtmlRendererTest extends TestCase
 {
     public function testRender(): void
     {
-        $jsonRenderer = new JsonRenderer(
+        $htmlRenderer = new HtmlRenderer(
             $renderer = m::mock(ThrowableRendererInterface::class)
         );
 
@@ -25,15 +24,16 @@ final class JsonRendererTest extends TestCase
                 new ErrorData('foo content')
             );
 
-        $this->assertSame('foo content', $jsonRenderer->render($exception));
+        $this->assertSame('foo content', $htmlRenderer->render($exception));
     }
 
     public function testCanRender(): void
     {
-        $renderer = new JsonRenderer();
+        $renderer = new HtmlRenderer();
 
-        $this->assertTrue($renderer->canRender('application/json'));
-        $this->assertTrue($renderer->canRender('json'));
-        $this->assertFalse($renderer->canRender('application/html'));
+        $this->assertTrue($renderer->canRender('html'));
+        $this->assertTrue($renderer->canRender('application/html'));
+        $this->assertTrue($renderer->canRender('text/html'));
+        $this->assertFalse($renderer->canRender('application/json'));
     }
 }

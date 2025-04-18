@@ -1,17 +1,20 @@
 <?php
 
-namespace Spiral\YiiErrorHandler\Tests;
+namespace Spiral\YiiErrorHandler\Tests\Unit;
 
 use Spiral\YiiErrorHandler\HtmlRenderer;
 use Mockery as m;
+use Spiral\YiiErrorHandler\JsonRenderer;
+use Spiral\YiiErrorHandler\PlainTextRenderer;
+use Spiral\YiiErrorHandler\XmlRenderer;
 use Yiisoft\ErrorHandler\ErrorData;
 use Yiisoft\ErrorHandler\ThrowableRendererInterface;
 
-final class HtmlRendererTest extends TestCase
+final class XmlRendererTest extends TestCase
 {
     public function testRender(): void
     {
-        $htmlRenderer = new HtmlRenderer(
+        $xmlRenderer = new XmlRenderer(
             $renderer = m::mock(ThrowableRendererInterface::class)
         );
 
@@ -24,16 +27,15 @@ final class HtmlRendererTest extends TestCase
                 new ErrorData('foo content')
             );
 
-        $this->assertSame('foo content', $htmlRenderer->render($exception));
+        $this->assertSame('foo content', $xmlRenderer->render($exception));
     }
 
     public function testCanRender(): void
     {
-        $renderer = new HtmlRenderer();
+        $renderer = new XmlRenderer();
 
-        $this->assertTrue($renderer->canRender('html'));
-        $this->assertTrue($renderer->canRender('application/html'));
-        $this->assertTrue($renderer->canRender('text/html'));
-        $this->assertFalse($renderer->canRender('application/json'));
+        $this->assertTrue($renderer->canRender('application/xml'));
+        $this->assertTrue($renderer->canRender('text/xml'));
+        $this->assertFalse($renderer->canRender('text/html'));
     }
 }

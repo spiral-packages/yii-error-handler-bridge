@@ -1,6 +1,6 @@
 <?php
 
-namespace Spiral\YiiErrorHandler\Tests;
+namespace Spiral\YiiErrorHandler\Tests\Unit;
 
 class TestCase extends \Spiral\Testing\TestCase
 {

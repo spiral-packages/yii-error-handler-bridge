@@ -1,32 +1,38 @@
 {
     "name": "spiral-packages/yii-error-handler-bridge",
     "description": "Yii Error Handler integration package for Spiral Framework",
+    "type": "library",
+    "license": "MIT",
     "keywords": [
         "spiral",
         "spiral-framework",
         "error-handling"
     ],
     "homepage": "https://github.com/spiral-packages/yii-error-handler-bridge",
-    "license": "MIT",
     "authors": [
         {
             "name": "kastahov",
             "email": "kastahov1021@gmail.com",
             "role": "Developer"
+        },
+        {
+            "name": "Aleksei Gagarin (roxblnfk)",
+            "homepage": "https://github.com/roxblnfk"
         }
     ],
     "require": {
         "php": "^8.1",
         "spiral/boot": "^3.0",
         "spiral/exceptions": "^3.0",
-        "yiisoft/error-handler": "~3.3"
+        "yiisoft/error-handler": "4.1.0"
     },
     "require-dev": {
         "spiral/http": "^3.0",
         "mockery/mockery": "^1.5",
         "phpunit/phpunit": "^9.5.28",
-        "spiral/testing": "^2.0",
-        "vimeo/psalm": "^4.9"
+        "spiral/code-style": "^2.2.2",
+        "spiral/testing": "^2.9",
+        "vimeo/psalm": "^6.10"
     },
     "autoload": {
         "psr-4": {
@@ -35,15 +41,16 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Spiral\\YiiErrorHandler\\Tests\\": "tests/src"
+            "Spiral\\YiiErrorHandler\\Tests\\": "tests"
         },
         "files": [
             "tests/polyfill.php"
         ]
     },
     "scripts": {
-        "test": "vendor/bin/phpunit",
-        "psalm": "vendor/bin/psalm --config=psalm.xml ./src"
+        "cs:fix": "php-cs-fixer fix -v",
+        "test": "phpunit",
+        "psalm": "psalm"
     },
     "config": {
         "sort-packages": true
