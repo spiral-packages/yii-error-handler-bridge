@@ -23,7 +23,7 @@ class YiiErrorHandlerBootloader extends Bootloader
         HtmlRenderer $htmlRenderer,
         PlainTextRenderer $plainTextRenderer,
         JsonRenderer $jsonRenderer,
-        XmlRenderer $xmlRenderer
+        XmlRenderer $xmlRenderer,
     ): void {
         $handler->addRenderer($htmlRenderer);
         $handler->addRenderer($plainTextRenderer);

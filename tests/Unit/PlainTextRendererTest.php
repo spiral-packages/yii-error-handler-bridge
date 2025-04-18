@@ -1,10 +1,10 @@
 <?php
 
-namespace Spiral\YiiErrorHandler\Tests;
+declare(strict_types=1);
 
-use Spiral\YiiErrorHandler\HtmlRenderer;
+namespace Spiral\YiiErrorHandler\Tests\Unit;
+
 use Mockery as m;
-use Spiral\YiiErrorHandler\JsonRenderer;
 use Spiral\YiiErrorHandler\PlainTextRenderer;
 use Yiisoft\ErrorHandler\ErrorData;
 use Yiisoft\ErrorHandler\ThrowableRendererInterface;
@@ -14,7 +14,7 @@ final class PlainTextRendererTest extends TestCase
     public function testRender(): void
     {
         $plainTextRenderer = new PlainTextRenderer(
-            $renderer = m::mock(ThrowableRendererInterface::class)
+            $renderer = m::mock(ThrowableRendererInterface::class),
         );
 
         $exception = new \ErrorException('Test exception');
@@ -23,7 +23,7 @@ final class PlainTextRendererTest extends TestCase
             ->once()
             ->with($exception)
             ->andReturn(
-                new ErrorData('foo content')
+                new ErrorData('foo content'),
             );
 
         $this->assertSame('foo content', $plainTextRenderer->render($exception));
