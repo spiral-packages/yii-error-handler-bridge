@@ -8,4 +8,5 @@ return \Spiral\CodeStyle\Builder::create()
     ->include(__DIR__ . '/src')
     ->include(__DIR__ . '/tests')
     ->include(__FILE__)
+    ->cache(__DIR__ . '/runtime/.php-cs-fixer.cache')
     ->build();
