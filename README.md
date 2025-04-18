@@ -19,6 +19,30 @@ Make sure that your server is configured with following PHP version and extensio
 
 See the [documentation](https://spiral.dev/docs/basics-errors#yii-error-renderer) for detailed installation and usage instructions.
 
+## Acceptance Test Sandbox
+
+This package includes an acceptance test sandbox that demonstrates how the different error renderers work with various verbosity levels. The sandbox provides a simple web interface to visualize errors rendered in HTML, JSON, XML, and Plain Text formats.
+
+### Running the Sandbox
+
+You can run the sandbox using Composer:
+
+```bash
+composer sandbox
+```
+
+Or manually start the PHP built-in web server from the project root:
+
+```bash
+php -S localhost:8000 tests/Acceptance/server.php
+```
+
+Then open your browser and navigate to `http://localhost:8000`
+
+The interface allows you to select different renderer types (HTML, JSON, Plain Text, XML) and verbosity levels (Basic, Verbose, Debug) to see how exceptions are presented in each format.
+
+This sandbox is useful for testing and understanding how the error renderers work in different scenarios without needing to integrate them into a full application.
+
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE) for more information.

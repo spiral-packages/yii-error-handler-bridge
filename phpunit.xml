@@ -2,9 +2,10 @@
 <phpunit
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+        bootstrap="vendor/autoload.php"
+        cacheResultFile="runtime/phpunit/phpunit-result.cache"
         backupGlobals="false"
         backupStaticAttributes="false"
-        bootstrap="vendor/autoload.php"
         colors="true"
         convertErrorsToExceptions="true"
         convertNoticesToExceptions="true"
@@ -28,9 +29,9 @@
             <directory suffix=".php">./src</directory>
         </include>
         <report>
-            <html outputDirectory="runtime/coverage"/>
-            <text outputFile="runtime/coverage.txt"/>
-            <clover outputFile="runtime/logs/clover.xml"/>
+            <html outputDirectory="runtime/phpunit/coverage"/>
+            <text outputFile="runtime/phpunit/coverage.txt"/>
+            <clover outputFile="runtime/phpunit/logs/clover.xml"/>
         </report>
     </coverage>
     <logging>

@@ -50,7 +50,8 @@
     "scripts": {
         "cs:fix": "php-cs-fixer fix -v",
         "test": "phpunit",
-        "psalm": "psalm"
+        "psalm": "psalm",
+        "sandbox": "php -S localhost:8000 tests/Acceptance/server.php"
     },
     "config": {
         "sort-packages": true
