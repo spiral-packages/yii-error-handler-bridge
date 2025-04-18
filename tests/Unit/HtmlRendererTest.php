@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Spiral\YiiErrorHandler\Tests\Unit;
 
 use Spiral\YiiErrorHandler\HtmlRenderer;
@@ -12,7 +14,7 @@ final class HtmlRendererTest extends TestCase
     public function testRender(): void
     {
         $htmlRenderer = new HtmlRenderer(
-            $renderer = m::mock(ThrowableRendererInterface::class)
+            $renderer = m::mock(ThrowableRendererInterface::class),
         );
 
         $exception = new \ErrorException('Test exception');
@@ -21,7 +23,7 @@ final class HtmlRendererTest extends TestCase
             ->once()
             ->with($exception)
             ->andReturn(
-                new ErrorData('foo content')
+                new ErrorData('foo content'),
             );
 
         $this->assertSame('foo content', $htmlRenderer->render($exception));

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Spiral\YiiErrorHandler;
 
 use Spiral\Exceptions\ExceptionRendererInterface;
@@ -12,20 +14,19 @@ final class JsonRenderer implements ExceptionRendererInterface
     public const FORMATS = ['application/json', 'json'];
 
     public function __construct(
-        private readonly ?ThrowableRendererInterface $renderer = new YiiJsonRenderer()
-    ) {
-    }
+        private readonly ?ThrowableRendererInterface $renderer = new YiiJsonRenderer(),
+    ) {}
 
     public function render(
         \Throwable $exception,
         ?Verbosity $verbosity = Verbosity::BASIC,
-        string $format = null,
+        ?string $format = null,
     ): string {
         if ($verbosity?->value >= Verbosity::VERBOSE->value) {
-            return (string)$this->renderer->renderVerbose($exception);
+            return (string) $this->renderer->renderVerbose($exception);
         }
 
-        return (string)$this->renderer->render($exception);
+        return (string) $this->renderer->render($exception);
     }
 
     public function canRender(string $format): bool
