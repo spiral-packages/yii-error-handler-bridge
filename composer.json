@@ -52,7 +52,10 @@
         "cs:fix": "php-cs-fixer fix -v",
         "test": "phpunit",
         "psalm": "psalm",
-        "sandbox": "php -S localhost:8000 tests/Acceptance/server.php"
+        "sandbox": [
+            "Composer\\Config::disableProcessTimeout",
+            "php -S localhost:8000 tests/Acceptance/server.php"
+        ]
     },
     "config": {
         "sort-packages": true
