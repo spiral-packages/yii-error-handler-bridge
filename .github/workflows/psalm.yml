@@ -1,10 +1,12 @@
 on:
   pull_request:
   push:
-    branches:
-      - *
+    branches: [1.x]
 
 name: static analysis
+
+permissions:
+  contents: read
 
 jobs:
   psalm:
@@ -12,5 +14,6 @@ jobs:
     with:
       os: >-
         ['ubuntu-latest']
-      php: >-
-        ['8.1']
+      php: '["8.4"]'
+      bin-tool: psalm
+      command: composer psalm:ci

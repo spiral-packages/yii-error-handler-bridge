@@ -7,3 +7,4 @@
 *.xml                  export-ignore
 composer.lock          export-ignore
 tests                  export-ignore
+tools                  export-ignore
