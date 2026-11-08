@@ -30,10 +30,10 @@
         "bamarni/composer-bin-plugin": "^1.8",
         "buggregator/trap": "^1.13",
         "mockery/mockery": "^1.6.12",
-        "phpunit/phpunit": "^9.6",
         "spiral/code-style": "^2.2.2",
         "spiral/http": "^3.0",
-        "spiral/testing": "^2.9"
+        "testo/bridge-mockery": "^0.1.2",
+        "testo/testo": "^0.10.56"
     },
     "autoload": {
         "psr-4": {
@@ -50,7 +50,7 @@
     },
     "scripts": {
         "cs:fix": "php-cs-fixer fix -v",
-        "test": "phpunit",
+        "test": "vendor/bin/testo",
         "psalm": "psalm -c tools/psalm/psalm.xml",
         "psalm:baseline": "psalm -c tools/psalm/psalm.xml --set-baseline=tools/psalm/psalm-baseline.xml",
         "psalm:ci": "psalm -c tools/psalm/psalm.xml --output-format=github --shepherd --show-info=false --stats --threads=4",
