@@ -27,13 +27,13 @@
         "yiisoft/error-handler": "4.3.2"
     },
     "require-dev": {
+        "bamarni/composer-bin-plugin": "^1.8",
         "buggregator/trap": "^1.13",
         "mockery/mockery": "^1.6.12",
         "phpunit/phpunit": "^9.6",
         "spiral/code-style": "^2.2.2",
         "spiral/http": "^3.0",
-        "spiral/testing": "^2.9",
-        "vimeo/psalm": "^6.10"
+        "spiral/testing": "^2.9"
     },
     "autoload": {
         "psr-4": {
@@ -51,16 +51,26 @@
     "scripts": {
         "cs:fix": "php-cs-fixer fix -v",
         "test": "phpunit",
-        "psalm": "psalm",
+        "psalm": "psalm -c tools/psalm/psalm.xml",
+        "psalm:baseline": "psalm -c tools/psalm/psalm.xml --set-baseline=tools/psalm/psalm-baseline.xml",
+        "psalm:ci": "psalm -c tools/psalm/psalm.xml --output-format=github --shepherd --show-info=false --stats --threads=4",
         "sandbox": [
             "Composer\\Config::disableProcessTimeout",
             "php -S localhost:8000 tests/Acceptance/server.php"
         ]
     },
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "bamarni/composer-bin-plugin": true
+        }
     },
     "extra": {
+        "bamarni-bin": {
+            "bin-links": true,
+            "forward-command": false,
+            "target-directory": "tools"
+        },
         "spiral": {
             "bootloaders": [
                 "Spiral\\YiiErrorHandler\\Bootloader\\YiiErrorHandlerBootloader"

@@ -25,6 +25,7 @@ final class HtmlRenderer implements ExceptionRendererInterface
         );
     }
 
+    #[\Override]
     public function render(
         \Throwable $exception,
         ?Verbosity $verbosity = Verbosity::BASIC,
@@ -37,6 +38,7 @@ final class HtmlRenderer implements ExceptionRendererInterface
         return (string) $this->renderer->render($exception);
     }
 
+    #[\Override]
     public function canRender(string $format): bool
     {
         return \in_array($format, self::FORMATS, true);

@@ -17,6 +17,7 @@ final class XmlRenderer implements ExceptionRendererInterface
         private readonly ?ThrowableRendererInterface $renderer = new YiiXmlRenderer(),
     ) {}
 
+    #[\Override]
     public function render(
         \Throwable $exception,
         ?Verbosity $verbosity = Verbosity::BASIC,
@@ -29,6 +30,7 @@ final class XmlRenderer implements ExceptionRendererInterface
         return (string) $this->renderer->render($exception);
     }
 
+    #[\Override]
     public function canRender(string $format): bool
     {
         return \in_array($format, self::FORMATS, true);
