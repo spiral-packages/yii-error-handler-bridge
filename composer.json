@@ -21,15 +21,15 @@
         }
     ],
     "require": {
-        "php": "^8.1",
+        "php": "^8.2",
         "spiral/boot": "^3.0",
         "spiral/exceptions": "^3.0",
         "yiisoft/error-handler": "4.3.2"
     },
     "require-dev": {
         "buggregator/trap": "^1.13",
-        "mockery/mockery": "^1.5",
-        "phpunit/phpunit": "^9.5.28",
+        "mockery/mockery": "^1.6.12",
+        "phpunit/phpunit": "^9.6",
         "spiral/code-style": "^2.2.2",
         "spiral/http": "^3.0",
         "spiral/testing": "^2.9",
