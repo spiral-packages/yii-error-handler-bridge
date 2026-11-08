@@ -1,7 +1,9 @@
 /.*/
-!/.github
-composer.lock
-vendor
-/runtime
+!/.github/
+/runtime/
+/vendor/
 /tools/*/vendor/
 /tools/*/composer.lock
+/composer.lock
+/.env
+*.log
