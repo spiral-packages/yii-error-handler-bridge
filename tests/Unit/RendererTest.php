@@ -108,7 +108,15 @@ final class RendererTest
         $yiiRenderer->shouldReceive('render')->once()->with($exception)->andReturn(new ErrorData('basic content'));
         $yiiRenderer->shouldReceive('renderVerbose')->never();
 
-        $output = (new $class($yiiRenderer))->render($exception, $verbosity);
+        // Reading `->value` on a null verbosity only warns, so the warning is the failure signal.
+        \set_error_handler(
+            static fn(int $severity, string $message): never => throw new \ErrorException($message, 0, $severity),
+        );
+        try {
+            $output = (new $class($yiiRenderer))->render($exception, $verbosity);
+        } finally {
+            \restore_error_handler();
+        }
 
         Assert::same($output, 'basic content');
     }
