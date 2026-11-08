@@ -6,10 +6,13 @@ namespace Spiral\YiiErrorHandler\Tests\Unit;
 
 use Mockery as m;
 use Spiral\YiiErrorHandler\HtmlRenderer;
+use Testo\Assert;
+use Testo\Test;
 use Yiisoft\ErrorHandler\ErrorData;
 use Yiisoft\ErrorHandler\ThrowableRendererInterface;
 
-final class HtmlRendererTest extends TestCase
+#[Test]
+final class HtmlRendererTest
 {
     public function testRender(): void
     {
@@ -26,16 +29,16 @@ final class HtmlRendererTest extends TestCase
                 new ErrorData('foo content'),
             );
 
-        $this->assertSame('foo content', $htmlRenderer->render($exception));
+        Assert::same($htmlRenderer->render($exception), 'foo content');
     }
 
     public function testCanRender(): void
     {
         $renderer = new HtmlRenderer();
 
-        $this->assertTrue($renderer->canRender('html'));
-        $this->assertTrue($renderer->canRender('application/html'));
-        $this->assertTrue($renderer->canRender('text/html'));
-        $this->assertFalse($renderer->canRender('application/json'));
+        Assert::true($renderer->canRender('html'));
+        Assert::true($renderer->canRender('application/html'));
+        Assert::true($renderer->canRender('text/html'));
+        Assert::false($renderer->canRender('application/json'));
     }
 }

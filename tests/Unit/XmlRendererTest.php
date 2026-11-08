@@ -6,10 +6,13 @@ namespace Spiral\YiiErrorHandler\Tests\Unit;
 
 use Mockery as m;
 use Spiral\YiiErrorHandler\XmlRenderer;
+use Testo\Assert;
+use Testo\Test;
 use Yiisoft\ErrorHandler\ErrorData;
 use Yiisoft\ErrorHandler\ThrowableRendererInterface;
 
-final class XmlRendererTest extends TestCase
+#[Test]
+final class XmlRendererTest
 {
     public function testRender(): void
     {
@@ -26,15 +29,15 @@ final class XmlRendererTest extends TestCase
                 new ErrorData('foo content'),
             );
 
-        $this->assertSame('foo content', $xmlRenderer->render($exception));
+        Assert::same($xmlRenderer->render($exception), 'foo content');
     }
 
     public function testCanRender(): void
     {
         $renderer = new XmlRenderer();
 
-        $this->assertTrue($renderer->canRender('application/xml'));
-        $this->assertTrue($renderer->canRender('text/xml'));
-        $this->assertFalse($renderer->canRender('text/html'));
+        Assert::true($renderer->canRender('application/xml'));
+        Assert::true($renderer->canRender('text/xml'));
+        Assert::false($renderer->canRender('text/html'));
     }
 }
