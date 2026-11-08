@@ -5,6 +5,7 @@
 [![testo](https://github.com/spiral-packages/yii-error-handler-bridge/actions/workflows/testo.yml/badge.svg)](https://github.com/spiral-packages/yii-error-handler-bridge/actions)
 [![psalm](https://github.com/spiral-packages/yii-error-handler-bridge/actions/workflows/psalm.yml/badge.svg)](https://github.com/spiral-packages/yii-error-handler-bridge/actions)
 [![Codecov](https://codecov.io/gh/spiral-packages/yii-error-handler-bridge/branch/1.x/graph/badge.svg)](https://codecov.io/gh/spiral-packages/yii-error-handler-bridge/)
+[![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fspiral-packages%2Fyii-error-handler-bridge%2F1.x)](https://dashboard.stryker-mutator.io/reports/github.com/spiral-packages/yii-error-handler-bridge/1.x)
 [![Total Downloads](https://poser.pugx.org/spiral-packages/yii-error-handler-bridge/downloads)](https://packagist.org/spiral-packages/yii-error-handler-bridge/phpunit)
 <a href="https://discord.gg/8bZsjYhVVk"><img src="https://img.shields.io/badge/discord-chat-magenta.svg"></a>
 
