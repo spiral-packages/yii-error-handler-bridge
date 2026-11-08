@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Spiral\YiiErrorHandler\Tests\Unit;
 
-use Spiral\YiiErrorHandler\HtmlRenderer;
 use Mockery as m;
+use Spiral\YiiErrorHandler\HtmlRenderer;
 use Yiisoft\ErrorHandler\ErrorData;
 use Yiisoft\ErrorHandler\ThrowableRendererInterface;
 

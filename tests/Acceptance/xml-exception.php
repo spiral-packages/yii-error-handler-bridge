@@ -5,8 +5,8 @@ declare(strict_types=1);
 require_once __DIR__ . '/../../vendor/autoload.php';
 
 use Spiral\Exceptions\Verbosity;
-use Spiral\YiiErrorHandler\XmlRenderer;
 use Spiral\YiiErrorHandler\Tests\Acceptance\ExceptionFactory;
+use Spiral\YiiErrorHandler\XmlRenderer;
 
 // Set content type to XML
 \header('Content-Type: application/xml');
