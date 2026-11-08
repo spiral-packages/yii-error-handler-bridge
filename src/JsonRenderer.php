@@ -13,9 +13,13 @@ final class JsonRenderer implements ExceptionRendererInterface
 {
     public const FORMATS = ['application/json', 'json'];
 
+    private readonly ThrowableRendererInterface $renderer;
+
     public function __construct(
-        private readonly ?ThrowableRendererInterface $renderer = new YiiJsonRenderer(),
-    ) {}
+        ?ThrowableRendererInterface $renderer = new YiiJsonRenderer(),
+    ) {
+        $this->renderer = $renderer ?? new YiiJsonRenderer();
+    }
 
     #[\Override]
     public function render(

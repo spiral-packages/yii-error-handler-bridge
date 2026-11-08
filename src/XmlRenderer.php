@@ -13,9 +13,13 @@ final class XmlRenderer implements ExceptionRendererInterface
 {
     public const FORMATS = ['application/xml', 'text/xml'];
 
+    private readonly ThrowableRendererInterface $renderer;
+
     public function __construct(
-        private readonly ?ThrowableRendererInterface $renderer = new YiiXmlRenderer(),
-    ) {}
+        ?ThrowableRendererInterface $renderer = new YiiXmlRenderer(),
+    ) {
+        $this->renderer = $renderer ?? new YiiXmlRenderer();
+    }
 
     #[\Override]
     public function render(

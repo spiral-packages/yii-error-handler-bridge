@@ -13,8 +13,6 @@ use Spiral\YiiErrorHandler\XmlRenderer;
 use Testo\Assert;
 use Testo\Codecov\Covers;
 use Testo\Data\DataProvider;
-use Testo\Data\DataSet;
-use Testo\Skip;
 use Testo\Test;
 use Yiisoft\ErrorHandler\ThrowableRendererInterface;
 
@@ -75,23 +73,10 @@ final class DefaultRendererTest
         Assert::string($output)->contains(\file_get_contents(\dirname(__DIR__, 2) . '/templates/development.css'));
     }
 
-    public function htmlFallsBackToDefaultRendererOnNull(): void
-    {
-        $output = (new HtmlRenderer(null))->render(new \RuntimeException(self::MESSAGE));
-
-        Assert::string($output)->contains(ThrowableRendererInterface::DEFAULT_ERROR_MESSAGE);
-    }
-
     /**
-     * The constructors accept null, but only HtmlRenderer replaces it with a default renderer;
-     * the others store null and fail on the first render.
-     *
      * @param class-string<ExceptionRendererInterface> $class
      */
-    #[Skip('Bug: an explicit null renderer is stored as is, so render() calls a method on null')]
-    #[DataSet([JsonRenderer::class], 'json')]
-    #[DataSet([PlainTextRenderer::class], 'plain text')]
-    #[DataSet([XmlRenderer::class], 'xml')]
+    #[DataProvider('renderers')]
     public function fallsBackToDefaultRendererOnNull(string $class): void
     {
         $output = (new $class(null))->render(new \RuntimeException(self::MESSAGE));

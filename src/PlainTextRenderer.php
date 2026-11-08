@@ -13,9 +13,13 @@ final class PlainTextRenderer implements ExceptionRendererInterface
 {
     public const FORMATS = ['text/plain', 'text', 'plain'];
 
+    private readonly ThrowableRendererInterface $renderer;
+
     public function __construct(
-        private readonly ?ThrowableRendererInterface $renderer = new YiiPlainTextRenderer(),
-    ) {}
+        ?ThrowableRendererInterface $renderer = new YiiPlainTextRenderer(),
+    ) {
+        $this->renderer = $renderer ?? new YiiPlainTextRenderer();
+    }
 
     #[\Override]
     public function render(
