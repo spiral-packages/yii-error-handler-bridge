@@ -13,7 +13,7 @@
 Make sure that your server is configured with following PHP version and extensions:
 
 - PHP 8.2+
-- Spiral framework 3.0+
+- Spiral framework 3.15+
 
 ## Documentation, Installation, and Usage Instructions
 

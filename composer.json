@@ -22,8 +22,8 @@
     ],
     "require": {
         "php": "^8.2",
-        "spiral/boot": "^3.0",
-        "spiral/exceptions": "^3.0",
+        "spiral/boot": "^3.15",
+        "spiral/exceptions": "^3.15",
         "yiisoft/error-handler": "4.3.2"
     },
     "require-dev": {
