@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Spiral\YiiErrorHandler\Bootloader;
 
 use Spiral\Boot\Bootloader\Bootloader;
+use Spiral\Bootloader\Http\ErrorHandlerBootloader;
 use Spiral\Exceptions\ExceptionHandler;
 use Spiral\YiiErrorHandler\HtmlRenderer;
-use Spiral\Bootloader\Http\ErrorHandlerBootloader;
 use Spiral\YiiErrorHandler\JsonRenderer;
 use Spiral\YiiErrorHandler\PlainTextRenderer;
 use Spiral\YiiErrorHandler\XmlRenderer;
