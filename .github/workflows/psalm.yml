@@ -1,12 +1,17 @@
 on:
-  pull_request:
+  pull_request: null
   push:
-    branches: [1.x]
+    branches:
+      - '1.x'
 
 name: static analysis
 
 permissions:
   contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   psalm:
