@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.1](https://github.com/spiral-packages/yii-error-handler-bridge/compare/1.2.0...1.2.1) (2026-11-25)
+
+
+### Bug Fixes
+
+* **deps:** bump yiisoft/error-handler to 4.3.3 ([#41](https://github.com/spiral-packages/yii-error-handler-bridge/issues/41)) ([7f93fc7](https://github.com/spiral-packages/yii-error-handler-bridge/commit/7f93fc7961a50f8639c6a9b8c02a4f1afd846590))
+* escape cURL command in the development error page ([7f93fc7](https://github.com/spiral-packages/yii-error-handler-bridge/commit/7f93fc7961a50f8639c6a9b8c02a4f1afd846590))
+
 ## [1.2.0](https://github.com/spiral-packages/yii-error-handler-bridge/compare/1.1.4...1.2.0) (2026-11-08)
 
 
